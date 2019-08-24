@@ -1,0 +1,409 @@
+[terminals]
+
+
+alignas: "K_alignas";
+alignof: "K_alignof";
+and: "K_and";
+and_eq: "K_and_eq";
+asm: "K_asm";
+atomic_cancel: "K_atomic_cancel";
+atomic_commit: "K_atomic_commit";
+atomic_noexcept: "K_atomic_noexcept";
+auto: "K_auto";
+bitand: "K_bitand";
+bitor: "K_bitor";
+bool: "K_bool";
+break: "K_break";
+case: "K_case";
+catch: "K_catch";
+char: "K_char";
+char8_t: "K_char8_t";
+char16_t: "K_char16_t";
+char32_t: "K_char32_t";
+class: "K_class";
+compl: "K_compl";
+concept: "K_concept";
+const: "K_const";
+consteval: "K_consteval";
+constexpr: "K_constexpr";
+const_cast: "K_const_cast";
+continue: "K_continue";
+co_await: "K_co_await";
+co_return: "K_co_return";
+co_yield: "K_co_yield";
+decltype: "K_decltype";
+default: "K_default";
+delete: "K_delete";
+do: "K_do";
+double: "K_double";
+dynamic_cast: "K_dynamic_cast";
+else: "K_else";
+enum: "K_enum";
+explicit: "K_explicit";
+export: "K_export";
+extern: "K_extern";
+false: "K_false";
+float: "K_float";
+for: "K_for";
+friend: "K_friend";
+goto: "K_goto";
+if: "K_if";
+inline: "K_inline";
+int: "K_int";
+long: "K_long";
+mutable: "K_mutable";
+namespace: "K_namespace";
+new: "K_new";
+noexcept: "K_noexcept";
+not: "K_not";
+not_eq: "K_not_eq";
+nullptr: "K_nullptr";
+operator: "K_operator";
+or: "K_or";
+or_eq: "K_or_eq";
+private: "K_private";
+protected: "K_protected";
+public: "K_public";
+reflexpr: "K_reflexpr";
+register: "K_register";
+reinterpret_cast: "K_reinterpret_cast";
+requires: "K_requires";
+return: "K_return";
+short: "K_short";
+signed: "K_signed";
+sizeof: "K_sizeof";
+static: "K_static";
+static_assert: "K_static_assert";
+static_cast: "K_static_cast";
+struct: "K_struct";
+switch: "K_switch";
+synchronized: "K_synchronized";
+template: "K_template";
+this: "K_this";
+thread_local: "K_thread_local";
+throw: "K_throw";
+true: "K_true";
+try: "K_try";
+typedef: "K_typedef";
+typeid: "K_typeid";
+typename: "K_typename";
+union: "K_union";
+unsigned: "K_unsigned";
+using: "K_using";
+virtual: "K_virtual";
+void: "K_void";
+volatile: "K_volatile";
+wchar_t: "K_wchar_t";
+while: "K_while";
+xor: "K_xor";
+xor_eq : "K_xor_eq";
+
+identifier: Identifier;
+
+decimal_lit: Decimal;
+float_lit: Float;
+hex_lit: Hex;
+bin_lit: Bin;
+
+comment: Comment {skip};
+ml_comment: MLComment {skip};
+
+string_lit: String;
+char_lit: Char;
+
+"(": LParen;
+")": RParen;
+"[": LBracket;
+"]": RBracket;
+"{": LBrace;
+"}": RBrace;
+
+"#": OpHash;
+
+"=": OpAssign;
+"+=": OpPlusAssign;
+"-=": OpMinusAssign;
+"*=": OpMulAssign;
+"/=": OpDivAssign;
+"%=": OpModAssign;
+"&=": OpAndAssign;
+"|=": OpOrAssign;
+"^=": OpXorAssign;
+"<<=": OpShlAssign;
+">>=": OpShrAssign;
+
+"++": OpIncr;
+"--": OpDecr;
+
+"+": OpPlus;
+"-": OpMinus;
+"*": OpMul;
+"/": OpDiv;
+"%": OpMod;
+"~": OpNeg;
+"&": OpBitAnd;
+"|": OpBitOr;
+"||": OpLogicalOr;
+"&&": OpLogicalOr;
+"^": OpBitXor;
+"<<": OpShl;
+">>": OpShr;
+
+"==": OpEQ;
+"!=": OpNEQ;
+"<": OpLT;
+">": OpGT;
+"<=": OpLE;
+">=": OpGE;
+
+"->": OpArrow;
+".": OpDot;
+",": OpComma;
+":": OpColon;
+";": OpSemi;
+"?": OpQuestion;
+
+eof: "EoF" {eof};
+space: "Space" {skip};
+error: "Error" {error};
+
+[parser.header]
+#include <sadasd>
+
+[parser.source]
+
+[parser.types]
+
+terminal: "uint16_t";
+expr: "double";
+
+vardef: "void*";
+program: "void*";
+
+[parser.expose]
+
+program;
+
+[parser.grammar]
+
+program: {nullptr};
+program: program vardef {nullptr};
+
+vardef: identifier '=' expr ';' {writevar($identifier,$expr)};
+
+
+expr: expr_at[13];
+
+
+expr_at[n] where n >= 13: lhs=expr_at[13] '||' rhs=expr_at[12] {$lhs || $rhs};
+
+expr_at[n] where n >= 12: lhs=expr_at[12] '&&' rhs=expr_at[11] {$lhs && $rhs};
+
+expr_at[n] where n >= 11: lhs=expr_at[11] '>' rhs=expr_at[10] {$lhs > $rhs};
+expr_at[n] where n >= 11: lhs=expr_at[11] '<' rhs=expr_at[10] {$lhs < $rhs};
+expr_at[n] where n >= 11: lhs=expr_at[11] '<=' rhs=expr_at[10] {$lhs <= $rhs};
+expr_at[n] where n >= 11: lhs=expr_at[11] '>=' rhs=expr_at[10] {$lhs >= $rhs};
+expr_at[n] where n >= 11: lhs=expr_at[11] '!=' rhs=expr_at[10] {$lhs != $rhs};
+expr_at[n] where n >= 11: lhs=expr_at[11] '==' rhs=expr_at[10] {$lhs == $rhs};
+
+expr_at[n] where n >= 10: lhs=expr_at[10] '+' rhs=expr_at[9] {$lhs + $rhs};
+expr_at[n] where n >= 10: lhs=expr_at[10] '-' rhs=expr_at[9] {$lhs - $rhs};
+
+expr_at[n] where n >= 9: lhs=expr_at[9] '*' rhs=expr_at[8] {$lhs * $rhs};
+expr_at[n] where n >= 9: lhs=expr_at[9] '/' rhs=expr_at[8] {$lhs / $rhs};
+expr_at[n] where n >= 0: prim;
+
+
+prim: '(' expr ')' {$expr};
+prim: tok=decimal_lit {parse($tok)};
+prim: tok=float_lit {parse($tok)};
+prim: tok=hex_lit {parse($tok)};
+prim: tok=bin_lit {parse($tok)};
+prim: identifier {readvar($identifier)};
+
+
+[lexer.fragments]
+
+digit:          [0-9];
+non_zero_digit: [1-9];
+l_letter:       [a-z];
+U_letter:       [A-Z];
+letter:         [a-zA-Z];
+space:          [ \n\r\t];
+whitespace:     [ \t];
+newline:        [\n]|[\r\n]|[\r];
+id_start_char:  <letter> | _;
+id_char:        <letter> | <digit> | _;
+integer:        0 | <non_zero_digit> <digit>*;
+hex_digit:      [0-9a-fA-F];
+
+string_prefix:  L|u8|u|U;
+
+[lexer.grammar]
+
+
+alignas;
+alignof;
+and;
+and_eq;
+asm;
+atomic_cancel;
+atomic_commit;
+atomic_noexcept;
+auto;
+bitand;
+bitor;
+bool;
+break;
+case;
+catch;
+char;
+char8_t;
+char16_t;
+char32_t;
+class;
+compl;
+concept;
+const;
+consteval;
+constexpr;
+const_cast;
+continue;
+co_await;
+co_return;
+co_yield;
+decltype;
+default;
+delete;
+do;
+double;
+dynamic_cast;
+else;
+enum;
+explicit;
+export;
+extern;
+false;
+float;
+for;
+friend;
+goto;
+if;
+inline;
+int;
+long;
+mutable;
+namespace;
+new;
+noexcept;
+not;
+not_eq;
+nullptr;
+operator;
+or;
+or_eq;
+private;
+protected;
+public;
+reflexpr;
+register;
+reinterpret_cast;
+requires;
+return;
+short;
+signed;
+sizeof;
+static;
+static_assert;
+static_cast;
+struct;
+switch;
+synchronized;
+template;
+this;
+thread_local;
+throw;
+true;
+try;
+typedef;
+typeid;
+typename;
+union;
+unsigned;
+using;
+virtual;
+void;
+volatile;
+wchar_t;
+while;
+xor;
+xor_eq;
+
+identifier:     <id_start_char> <id_char>*;
+
+decimal_lit:        <integer>;
+float_lit:          <integer> [.] <digit>+ ([eE][+\-]?[0-9]+)?;
+hex_lit:            0x <hex_digit>+;
+bin_lit:            0b [01]+;
+
+
+space:          (" "|\r\n|\n|\r|\t)+;
+
+comment:        "//" [^\n\r]+ <newline>?;
+ml_comment:     "/*" ([^*]|[*]*[^/*])* [*]* "*/";
+
+string_lit:         <string_prefix> \" ( \\[nrt0\\"] | \\x <hex_digit>{2} | [^"\\] )* \";
+char_lit:           \' ( \\[nrt0\\"] | \\x <hex_digit>{2} | [^"\\] ) \';
+
+"(";
+")";
+"[";
+"]";
+"{";
+"}";
+
+"#";
+
+"&&";
+"||";
+
+"=";
+"+=";
+"-=";
+"*=";
+"/=";
+"%=";
+"&=";
+"|=";
+"^=";
+"<<=";
+">>=";
+
+"++";
+"--";
+
+"+";
+"-";
+"*";
+"/";
+"%";
+"~";
+"&";
+"|";
+"^";
+"<<";
+">>";
+
+"==";
+"!=";
+"<";
+">";
+"<=";
+">=";
+
+"->";
+".";
+",";
+":";
+";";
+"?";
