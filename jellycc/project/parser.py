@@ -72,6 +72,10 @@ class ProjectParser(ParserBase):
 					self.section_lexer_grammar()
 				elif section_name == "parser.types":
 					self.section_parser_types()
+				elif section_name == "parser.vm_args":
+					self.section_parser_vm_args()
+				elif section_name == "parser.vm_actions":
+					self.section_parser_vm_actions()
 				elif section_name == "parser.grammar":
 					self.section_parser_grammar()
 				elif section_name == "parser.expose":
@@ -116,6 +120,17 @@ class ProjectParser(ParserBase):
 			self.semi()
 			self.project.add_type(loc, name, type)
 
+	def section_parser_vm_args(self) -> None:
+		while True:
+			self.skip_ws()
+			loc, name = self.loc(), self.try_name()
+			if name is None:
+				break
+			self.colon()
+			type = self.parse_name()
+			self.semi()
+			self.project.add_vm_arg(loc, name, type)
+
 	def section_parser_expose(self) -> None:
 		while True:
 			self.skip_ws()
@@ -138,16 +153,60 @@ class ProjectParser(ParserBase):
 			self.semi()
 			self.project.add_nt_rule(loc, name, param_names, cond, symbols, action)
 
-	def try_nt_action(self) -> Optional[TemplateAction]:
+	def section_parser_vm_actions(self) -> None:
+		while True:
+			self.skip_ws()
+			loc, name = self.loc(), self.try_name()
+			if name is None:
+				break
+			self.colon()
+			action = self.parse_action()
+			self.semi()
+			self.project.register_vm_action(loc, name, action)
+
+	def parse_action(self) -> Tuple[SrcLoc, str]:
 		self.skip_ws()
 		if self.peek() != '{':
-			return None
-		loc = self.loc()
+			self.report("expected action", self.loc())
 		counter = 0
 		while self.peek() == '{':
 			counter += 1
 			self.advance()
 		self.skip_ws()
+		loc = self.loc()
+		text = []
+		while True:
+			ch = self.peek()
+			if ch == '}':
+				n = 0
+				flag = False
+				while self.peek() == '}':
+					n += 1
+					self.advance()
+					if n == counter:
+						flag = True
+						break
+				else:
+					text.append('}' * n)
+				if flag:
+					break
+			elif ch is None:
+				self.report("action is not terminated")
+			else:
+				self.advance()
+				text.append(ch)
+		return (loc, ''.join(text).strip())
+
+	def try_nt_action(self) -> Optional[TemplateAction]:
+		self.skip_ws()
+		if self.peek() != '{':
+			return None
+		counter = 0
+		while self.peek() == '{':
+			counter += 1
+			self.advance()
+		self.skip_ws()
+		loc = self.loc()
 		text = []
 		while True:
 			ch = self.peek()

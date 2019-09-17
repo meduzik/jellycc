@@ -16,7 +16,6 @@ struct LexerCallback {
 	void (*get_buffer) (
 		void* ud,
 		uint16_t** tokens,
-		uint16_t** hashes,
 		uint32_t** offsets,
 		size_t* count
 	);

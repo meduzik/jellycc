@@ -1,102 +1,7 @@
 [terminals]
 
-
-alignas: "K_alignas";
-alignof: "K_alignof";
-and: "K_and";
-and_eq: "K_and_eq";
-asm: "K_asm";
-atomic_cancel: "K_atomic_cancel";
-atomic_commit: "K_atomic_commit";
-atomic_noexcept: "K_atomic_noexcept";
-auto: "K_auto";
-bitand: "K_bitand";
-bitor: "K_bitor";
-bool: "K_bool";
-break: "K_break";
-case: "K_case";
-catch: "K_catch";
-char: "K_char";
-char8_t: "K_char8_t";
-char16_t: "K_char16_t";
-char32_t: "K_char32_t";
-class: "K_class";
-compl: "K_compl";
-concept: "K_concept";
-const: "K_const";
-consteval: "K_consteval";
-constexpr: "K_constexpr";
-const_cast: "K_const_cast";
-continue: "K_continue";
-co_await: "K_co_await";
-co_return: "K_co_return";
-co_yield: "K_co_yield";
-decltype: "K_decltype";
-default: "K_default";
-delete: "K_delete";
-do: "K_do";
-double: "K_double";
-dynamic_cast: "K_dynamic_cast";
-else: "K_else";
-enum: "K_enum";
-explicit: "K_explicit";
-export: "K_export";
-extern: "K_extern";
-false: "K_false";
-float: "K_float";
-for: "K_for";
-friend: "K_friend";
-goto: "K_goto";
-if: "K_if";
-inline: "K_inline";
-int: "K_int";
-long: "K_long";
-mutable: "K_mutable";
-namespace: "K_namespace";
-new: "K_new";
-noexcept: "K_noexcept";
-not: "K_not";
-not_eq: "K_not_eq";
-nullptr: "K_nullptr";
-operator: "K_operator";
-or: "K_or";
-or_eq: "K_or_eq";
-private: "K_private";
-protected: "K_protected";
-public: "K_public";
-reflexpr: "K_reflexpr";
-register: "K_register";
-reinterpret_cast: "K_reinterpret_cast";
-requires: "K_requires";
-return: "K_return";
-short: "K_short";
-signed: "K_signed";
-sizeof: "K_sizeof";
-static: "K_static";
-static_assert: "K_static_assert";
-static_cast: "K_static_cast";
-struct: "K_struct";
-switch: "K_switch";
-synchronized: "K_synchronized";
-template: "K_template";
-this: "K_this";
-thread_local: "K_thread_local";
-throw: "K_throw";
-true: "K_true";
-try: "K_try";
-typedef: "K_typedef";
-typeid: "K_typeid";
-typename: "K_typename";
-union: "K_union";
-unsigned: "K_unsigned";
-using: "K_using";
-virtual: "K_virtual";
-void: "K_void";
-volatile: "K_volatile";
-wchar_t: "K_wchar_t";
-while: "K_while";
-xor: "K_xor";
-xor_eq : "K_xor_eq";
+import: K_import;
+as: K_as;
 
 identifier: Identifier;
 
@@ -109,7 +14,6 @@ comment: Comment {skip};
 ml_comment: MLComment {skip};
 
 string_lit: String;
-char_lit: Char;
 
 "(": LParen;
 ")": RParen;
@@ -144,7 +48,7 @@ char_lit: Char;
 "&": OpBitAnd;
 "|": OpBitOr;
 "||": OpLogicalOr;
-"&&": OpLogicalOr;
+"&&": OpLogicalAnd;
 "^": OpBitXor;
 "<<": OpShl;
 ">>": OpShr;
@@ -168,17 +72,62 @@ space: "Space" {skip};
 error: "Error" {error};
 
 [parser.header]
-#include <sadasd>
+#include <unordered_map>
+#include <string>
+
+using VarMap = std::unordered_map<std::string, double>;
+struct DoubleList {
+	double val;
+	DoubleList* next;
+};
+struct CBData {
+	void* ud;
+	std::string (*make_string) (void*, uint32_t t);
+	double (*make_num) (void*, uint32_t t);
+	double (*invoke) (void*, const std::string& fname, DoubleList* args);
+	void (*sync_skip) (void*, uint32_t*& tokid, size_t num);
+	void (*sync_insert) (void*, uint32_t*& tokid, uint16_t terminal);
+
+	void (*lec_insert) (void*, uint32_t*& tokid, uint16_t terminal);
+	void (*lec_remove) (void*, uint32_t*& tokid);
+	void (*lec_replace) (void*, uint32_t*& tokid, uint16_t terminal);
+};
+using FuncMap = std::unordered_map<std::string, double(*)(DoubleList*)>;
 
 [parser.source]
 
+#define mkstring(t) cb.make_string(cb.ud, t)
+#define mklist(head, tail) new DoubleList{head, tail}
+#define parse(t) cb.make_num(cb.ud, t)
+
+[parser.vm_args]
+vars: "VarMap*";
+tokid: "uint32_t*";
+cb: "CBData";
+
+[parser.vm_actions]
+shift: {*(tokid++)};
+correction_remove: { cb.lec_remove(cb.ud, tokid); };
+correction_insert: { cb.lec_insert(cb.ud, tokid, terminal); };
+correction_replace: { cb.lec_replace(cb.ud, tokid, terminal); };
+sync_skip: { cb.sync_skip(cb.ud, tokid, num); };
+sync_insert: { cb.sync_insert(cb.ud, tokid, terminal); };
+
 [parser.types]
 
-terminal: "uint16_t";
+terminal: "uint32_t";
 expr: "double";
 
-vardef: "void*";
-program: "void*";
+vardef: "";
+program: "";
+
+expr_list: "DoubleList*";
+
+as_clause: "";
+subset_clause: "";
+subset_entries: "";
+subset_entry: "";
+subset_entries_head: "";
 
 [parser.expose]
 
@@ -186,32 +135,56 @@ program;
 
 [parser.grammar]
 
-program: {nullptr};
-program: program vardef {nullptr};
+program: ;
+program: program vardef ;
+program: program import_def ;
 
-vardef: identifier '=' expr ';' {writevar($identifier,$expr)};
+vardef: identifier '=' expr ';' {(*vars)[mkstring($identifier)] = $expr};
+import_def: import string_lit as_clause subset_clause ';' {nullptr};
 
+as_clause: as identifier {nullptr};
+as_clause: {nullptr};
 
-expr: expr_at[13];
+subset_clause: {nullptr};
+subset_clause: '{' subset_entries '}' {nullptr};
+subset_entries: {nullptr};
+subset_entries: subset_entries_head ',' subset_entry {nullptr};
+subset_entries_head: subset_entry {nullptr};
+subset_entries_head: subset_entries_head ',' subset_entry {nullptr};
 
+subset_entry: identifier as_clause {nullptr};
 
-expr_at[n] where n >= 13: lhs=expr_at[13] '||' rhs=expr_at[12] {$lhs || $rhs};
+expr_list: {nullptr};
+expr_list: expr_list_head;
+expr_list_head: expr ',' expr_list_head  {mklist($expr, $expr_list_head)};
+expr_list_head: expr {mklist($expr, nullptr)};
 
-expr_at[n] where n >= 12: lhs=expr_at[12] '&&' rhs=expr_at[11] {$lhs && $rhs};
+expr: expr_at[14];
 
-expr_at[n] where n >= 11: lhs=expr_at[11] '>' rhs=expr_at[10] {$lhs > $rhs};
-expr_at[n] where n >= 11: lhs=expr_at[11] '<' rhs=expr_at[10] {$lhs < $rhs};
-expr_at[n] where n >= 11: lhs=expr_at[11] '<=' rhs=expr_at[10] {$lhs <= $rhs};
-expr_at[n] where n >= 11: lhs=expr_at[11] '>=' rhs=expr_at[10] {$lhs >= $rhs};
-expr_at[n] where n >= 11: lhs=expr_at[11] '!=' rhs=expr_at[10] {$lhs != $rhs};
-expr_at[n] where n >= 11: lhs=expr_at[11] '==' rhs=expr_at[10] {$lhs == $rhs};
+expr_at[n] where n == 13: lhs=expr_at[13] '||' rhs=expr_at[12] {$lhs || $rhs};
 
-expr_at[n] where n >= 10: lhs=expr_at[10] '+' rhs=expr_at[9] {$lhs + $rhs};
-expr_at[n] where n >= 10: lhs=expr_at[10] '-' rhs=expr_at[9] {$lhs - $rhs};
+expr_at[n] where n == 12: lhs=expr_at[12] '&&' rhs=expr_at[11] {$lhs && $rhs};
 
-expr_at[n] where n >= 9: lhs=expr_at[9] '*' rhs=expr_at[8] {$lhs * $rhs};
-expr_at[n] where n >= 9: lhs=expr_at[9] '/' rhs=expr_at[8] {$lhs / $rhs};
-expr_at[n] where n >= 0: prim;
+expr_at[n] where n == 11: lhs=expr_at[11] '>' rhs=expr_at[10] {$lhs > $rhs};
+expr_at[n] where n == 11: lhs=expr_at[11] '<' rhs=expr_at[10] {$lhs < $rhs};
+expr_at[n] where n == 11: lhs=expr_at[11] '<=' rhs=expr_at[10] {$lhs <= $rhs};
+expr_at[n] where n == 11: lhs=expr_at[11] '>=' rhs=expr_at[10] {$lhs >= $rhs};
+expr_at[n] where n == 11: lhs=expr_at[11] '!=' rhs=expr_at[10] {$lhs != $rhs};
+expr_at[n] where n == 11: lhs=expr_at[11] '==' rhs=expr_at[10] {$lhs == $rhs};
+
+expr_at[n] where n == 10: lhs=expr_at[10] '+' rhs=expr_at[9] {$lhs + $rhs};
+expr_at[n] where n == 10: lhs=expr_at[10] '-' rhs=expr_at[9] {$lhs - $rhs};
+
+expr_at[n] where n == 9: lhs=expr_at[9] '*' rhs=expr_at[8] {$lhs * $rhs};
+expr_at[n] where n == 9: lhs=expr_at[9] '/' rhs=expr_at[8] {$lhs / $rhs};
+
+expr_at[n] where n == 2: '-' expr_at[2] {-$expr_at};
+expr_at[n] where n == 2: '+' expr_at[2] {+$expr_at};
+
+expr_at[n] where n == 1: lhs=identifier '(' expr_list ')' {cb.invoke(cb.ud, mkstring($lhs), $expr_list)};
+
+expr_at[n] where n > 0: expr_at[n - 1];
+expr_at[n] where n == 0: prim;
 
 
 prim: '(' expr ')' {$expr};
@@ -219,10 +192,11 @@ prim: tok=decimal_lit {parse($tok)};
 prim: tok=float_lit {parse($tok)};
 prim: tok=hex_lit {parse($tok)};
 prim: tok=bin_lit {parse($tok)};
-prim: identifier {readvar($identifier)};
+prim: identifier {(*vars)[mkstring($identifier)]};
 
 
 [lexer.fragments]
+
 
 digit:          [0-9];
 non_zero_digit: [1-9];
@@ -241,105 +215,10 @@ string_prefix:  L|u8|u|U;
 
 [lexer.grammar]
 
+import;
+as;
 
-alignas;
-alignof;
-and;
-and_eq;
-asm;
-atomic_cancel;
-atomic_commit;
-atomic_noexcept;
-auto;
-bitand;
-bitor;
-bool;
-break;
-case;
-catch;
-char;
-char8_t;
-char16_t;
-char32_t;
-class;
-compl;
-concept;
-const;
-consteval;
-constexpr;
-const_cast;
-continue;
-co_await;
-co_return;
-co_yield;
-decltype;
-default;
-delete;
-do;
-double;
-dynamic_cast;
-else;
-enum;
-explicit;
-export;
-extern;
-false;
-float;
-for;
-friend;
-goto;
-if;
-inline;
-int;
-long;
-mutable;
-namespace;
-new;
-noexcept;
-not;
-not_eq;
-nullptr;
-operator;
-or;
-or_eq;
-private;
-protected;
-public;
-reflexpr;
-register;
-reinterpret_cast;
-requires;
-return;
-short;
-signed;
-sizeof;
-static;
-static_assert;
-static_cast;
-struct;
-switch;
-synchronized;
-template;
-this;
-thread_local;
-throw;
-true;
-try;
-typedef;
-typeid;
-typename;
-union;
-unsigned;
-using;
-virtual;
-void;
-volatile;
-wchar_t;
-while;
-xor;
-xor_eq;
-
-identifier:     <id_start_char> <id_char>*;
+identifier:         <id_start_char> <id_char>*;
 
 decimal_lit:        <integer>;
 float_lit:          <integer> [.] <digit>+ ([eE][+\-]?[0-9]+)?;
@@ -347,13 +226,13 @@ hex_lit:            0x <hex_digit>+;
 bin_lit:            0b [01]+;
 
 
-space:          (" "|\r\n|\n|\r|\t)+;
+space:              (" "|\r\n|\n|\r|\t)+;
 
-comment:        "//" [^\n\r]+ <newline>?;
-ml_comment:     "/*" ([^*]|[*]*[^/*])* [*]* "*/";
+comment:            "//" [^\n\r]+ <newline>?;
+ml_comment:         "/*" ([^*]|[*]*[^/*])* [*]* "*/";
 
-string_lit:         <string_prefix> \" ( \\[nrt0\\"] | \\x <hex_digit>{2} | [^"\\] )* \";
-char_lit:           \' ( \\[nrt0\\"] | \\x <hex_digit>{2} | [^"\\] ) \';
+string_lit:         \" ( \\[nrt0\\"] | \\x <hex_digit>{2} | [^"\\] )* \";
+string_lit:         \' ( \\[nrt0\\"] | \\x <hex_digit>{2} | [^'\\] )* \';
 
 "(";
 ")";

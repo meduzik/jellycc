@@ -2,14 +2,19 @@ import re
 from collections import defaultdict
 from typing import Dict, Set, List, Optional, Tuple
 
-from jellycc.parser.codegen import Codegen
+from jellycc.parser.ll.builder import LLBuilder
+from jellycc.parser.ll.codegen import CodegenLH
+from jellycc.parser.ll.lhtable import LHTableBuilder
+from jellycc.parser.ll.recovery import LHRecovery
+from jellycc.parser.lr.codegen import Codegen
 from jellycc.parser.grammar import unify_type, TypeVariable, Type, TypeVoid, SymbolNonTerminal, Action, TypeConstant, \
-	ParserGrammar, SymbolTerminal
-from jellycc.parser.lalr import LALRBuilder
-from jellycc.parser.recovery import RecoveryBuilder
+	ParserGrammar, SymbolTerminal, Void
+from jellycc.parser.lr.lalr import LALRBuilder, LRTable
+from jellycc.parser.lr.lr1 import LR1State, Shift, Reduce
+from jellycc.parser.lr.recovery import RecoveryBuilder
 from jellycc.parser.template import TypeConstraint, TemplateNonTerminalRule, TemplateSymbol, CaptureRe, \
 	TemplateNonTerminal, TemplateGrammar, TemplateExpr, TemplateAction
-from jellycc.project.grammar import CodeBlock, SharedGrammar
+from jellycc.project.grammar import SharedGrammar
 from jellycc.utils.error import CCError
 from jellycc.utils.source import SrcLoc
 
@@ -23,7 +28,7 @@ SimpleNameRe = re.compile("^[a-zA-Z_][a-zA-Z0-9_]*$")
 class ParserGenerator:
 	def __init__(self, shared: SharedGrammar) -> None:
 		self.shared: SharedGrammar = shared
-		self.grammar = ParserGrammar()
+		self.grammar = ParserGrammar(shared)
 		self.template = TemplateGrammar(self.grammar)
 		self.parser_rules: List[ParserRule] = []
 		self.type_values: Dict[str, Type] = dict()
@@ -103,7 +108,7 @@ class ParserGenerator:
 	def _get_type(self, loc: SrcLoc, name: str) -> Type:
 		if name not in self.type_values:
 			if len(name) == 0:
-				self.type_values[name] = TypeVoid()
+				self.type_values[name] = Void
 			else:
 				self.type_values[name] = TypeConstant(loc, name)
 		return self.type_values[name]
@@ -166,7 +171,7 @@ class ParserGenerator:
 						nonnull_types.append(type)
 				consumed = False
 				if len(nonnull_types) == 0:
-					unify_type(constraint.loc, constraint.type, TypeVoid())
+					unify_type(constraint.loc, constraint.type, Void)
 					consumed = True
 				elif len(nonnull_types) == 1:
 					unify_type(constraint.loc, constraint.type, nonnull_types[0])
@@ -201,7 +206,7 @@ class ParserGenerator:
 				unify_type(loc, nt.type, type)
 			type_locs[name] = loc
 
-	def run(self) -> None:
+	def run_lr(self) -> None:
 		print("Constructing parser")
 		print("LALR builder")
 		table = LALRBuilder(self.grammar).build()
@@ -212,3 +217,16 @@ class ParserGenerator:
 		codegen = Codegen(self.grammar, table)
 		codegen.run()
 		print("Parser done")
+
+	def run_lh(self) -> None:
+		print("Constructing parser")
+		table = LHTableBuilder(self.grammar).build()
+		print("Computing recovery")
+		recovery = LHRecovery(table)
+		recovery.compute()
+		print("Codegen")
+		codegen = CodegenLH(self.grammar, table)
+		codegen.run()
+		print("Parser done")
+
+

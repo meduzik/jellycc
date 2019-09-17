@@ -25,6 +25,7 @@ class SharedGrammar:
 		self.terminals: Dict[str, Terminal] = dict()
 		self.term_error: Optional[Terminal] = None
 		self.term_eof: Optional[Terminal] = None
+		self.base_dir: str = ""
 
 	def add_terminal(self, loc: SrcLoc, name: str, lang_name: str, tags: List[Tuple[str, Optional[int]]]) -> None:
 		if name in self.terminals:

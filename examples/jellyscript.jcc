@@ -1,27 +1,13 @@
 [terminals]
 
-package: K_package;
-import: K_import;
-
-class: K_class;
-extends: K_extends;
-implements: K_implements;
-interface: K_interface;
-function: K_function;
-
-public: K_public;
-private: K_private;
-protected: K_protected;
-internal: K_internal;
-
-var: K_var;
-const: K_const;
+import: KImport;
 
 identifier: Identifier;
 
 decimal_lit: Decimal;
 float_lit: Float;
 hex_lit: Hex;
+bin_lit: Bin;
 
 comment: Comment {skip};
 ml_comment: MLComment {skip};
@@ -44,8 +30,6 @@ string_lit: String;
 "/=": OpDivAssign;
 "%=": OpModAssign;
 "&=": OpAndAssign;
-"&&=": OpLAndAssign;
-"||=": OpLOrAssign;
 "|=": OpOrAssign;
 "^=": OpXorAssign;
 "<<=": OpShlAssign;
@@ -62,9 +46,9 @@ string_lit: String;
 "%": OpMod;
 "~": OpNeg;
 "&": OpBitAnd;
-"&&": OpLogicAnd;
-"||": OpLogicOr;
 "|": OpBitOr;
+"||": OpLogicalOr;
+"&&": OpLogicalAnd;
 "^": OpBitXor;
 "<<": OpShl;
 ">>": OpAShr;
@@ -88,169 +72,6 @@ eof: "EoF" {eof};
 space: "Space" {skip};
 error: "Error" {error};
 
-[parser.header]
-
-[parser.source]
-
-[parser.types]
-
-terminal: Token;
-qualid: "QID*";
-toplevel_defs: "ConsList<TopLevelDef*>*";
-program: "Program*";
-package_def: "PackageDef*";
-package_contents: "PackageContents*";
-imports: "new ConsList<ImportStmt*>*";
-import_stmt: "ImportStmt*";
-toplevel_def: "TopLevelDef*";
-implements_clause: "ConsList<QID*>*";
-extends_interface_clause: "ConsList<QID*>*";
-extends_clause: "QID*";
-access_modifier: "AccessModifier";
-annotations: "ConsList<Annotation*>*";
-annotation: "Annotation*";
-annotation_call: "AnnotationCall*";
-annotation_args: "ConsList<AnnotationArg*>*";
-annotation_arg: "AnnotationArg*";
-expr: "Expr*";
-type: "Type*";
-
-[parser.expose]
-
-program;
-
-[parser.grammar]
-
-
-program: package_def package_contents {new Program($package_def, $package_contents)};
-
-package_def: package opt_qualid '{' package_contents '}' {};
-
-package_contents: imports toplevel_defs {};
-
-imports: imports import_stmt {};
-imports: {};
-
-import_stmt: import qualid ';' {};
-
-opt_qualid: {nullptr};
-opt_qualid: qualid;
-
-qualid: identifier {new QID(nullptr, $identifier)};
-qualid: qualid '.' identifier {new QID($qualid, $identifier)};
-
-toplevel_defs: {nullptr};
-toplevel_defs: toplevel_defs toplevel_def {new ConsList<TopLevelDef*>($toplevel_defs, $toplevel_def)};
-
-toplevel_def: class_def;
-toplevel_def: interface_def;
-toplevel_def: global_var_def;
-
-class_def:
-	annotations
-	access_modifier
-	class identifier
-		extends_clause
-		implements_clause
-	'{'
-	'}'
-	{new ClassDef($annotations, $access_modifier, $identifier, $extends_clause, $implements_clause)};
-
-interface_def:
-	annotations
-	access_modifier interface identifier
-		extends_interface_clause
-	'{'
-	'}'
-	{new InterfaceDef($annotations, $access_modifier, $identifier, $extends_interface_clause)};
-
-global_var_def:
-	annotations
-	access_modifier varkwd identifier m_type_binder m_initializer ';'
-	{new GlobalVarDef()};
-
-varkwd: var;
-varkwd: const;
-
-m_type_binder: {nullptr};
-m_type_binder: ':' type {$type};
-
-m_initializer: {nullptr};
-m_initializer: '=' expr_no_seq {$expr_no_seq};
-
-annotations: {nullptr};
-annotations: annotations annotation {new ConsList<Annotation*>($annotations, $annotation)};
-
-annotation: '[' qualid annotation_call ']' {new Annotation($qualid, $annotation_call)};
-annotation_call: {nullptr};
-annotation_call: '(' annotation_args ')' {new AnnotationCall($annotation_args)};
-annotation_args: {nullptr};
-annotation_args: annotation_args_nnul;
-annotation_args_nnul: annotation_arg {new ConsList<AnnotationArg*>(nullptr, $annotation_arg)};
-annotation_args_nnul: annotation_args_nnul ',' annotation_arg {new ConsList<AnnotationArg*>($annotation_args_nnul, $annotation_arg)};
-annotation_arg: identifier {new AnnotationArg($identifier, nullptr)};
-annotation_arg: identifier '=' expr_no_seq {new AnnotationArg($identifier, $expr_no_seq)};
-
-expr_no_seq: expr_at[20,0];
-expr: expr_at[20,1];
-
-expr_at[n,1] where n >= 20: lhs=expr_at[20,1] ',' rhs=expr_at[19,1] {new ExprSeq($lhs, $rhs)};
-
-expr_at[n,is_seq] where n == 19: lhs=expr_at[19,1] '=' rhs=expr_at[18,is_seq] {new ExprAssign(AssignOp::Set, $lhs, $rhs)};
-expr_at[n,is_seq] where n == 19: lhs=expr_at[19,1] '*=' rhs=expr_at[18,is_seq] {new ExprAssign(AssignOp::Mul, $lhs, $rhs)};
-expr_at[n,is_seq] where n == 19: lhs=expr_at[19,1] '/=' rhs=expr_at[18,is_seq] {new ExprAssign(AssignOp::Div, $lhs, $rhs)};
-expr_at[n,is_seq] where n == 19: lhs=expr_at[19,1] '%=' rhs=expr_at[18,is_seq] {new ExprAssign(AssignOp::Mod, $lhs, $rhs)};
-expr_at[n,is_seq] where n == 19: lhs=expr_at[19,1] '+=' rhs=expr_at[18,is_seq] {new ExprAssign(AssignOp::Add, $lhs, $rhs)};
-expr_at[n,is_seq] where n == 19: lhs=expr_at[19,1] '-=' rhs=expr_at[18,is_seq] {new ExprAssign(AssignOp::Sub, $lhs, $rhs)};
-expr_at[n,is_seq] where n == 19: lhs=expr_at[19,1] '<<=' rhs=expr_at[18,is_seq] {new ExprAssign(AssignOp::Shl, $lhs, $rhs)};
-expr_at[n,is_seq] where n == 19: lhs=expr_at[19,1] '>>=' rhs=expr_at[18,is_seq] {new ExprAssign(AssignOp::AShr, $lhs, $rhs)};
-expr_at[n,is_seq] where n == 19: lhs=expr_at[19,1] '>>>=' rhs=expr_at[18,is_seq] {new ExprAssign(AssignOp::LShr, $lhs, $rhs)};
-expr_at[n,is_seq] where n == 19: lhs=expr_at[19,1] '&=' rhs=expr_at[18,is_seq] {new ExprAssign(AssignOp::And, $lhs, $rhs)};
-expr_at[n,is_seq] where n == 19: lhs=expr_at[19,1] '^=' rhs=expr_at[18,is_seq] {new ExprAssign(AssignOp::Xor, $lhs, $rhs)};
-expr_at[n,is_seq] where n == 19: lhs=expr_at[19,1] '|=' rhs=expr_at[18,is_seq] {new ExprAssign(AssignOp::Or, $lhs, $rhs)};
-expr_at[n,is_seq] where n == 19: lhs=expr_at[19,1] '&&=' rhs=expr_at[18,is_seq] {new ExprAssign(AssignOp::LogicAnd, $lhs, $rhs)};
-expr_at[n,is_seq] where n == 19: lhs=expr_at[19,1] '||=' rhs=expr_at[18,is_seq] {new ExprAssign(AssignOp::LogicOr, $lhs, $rhs)};
-
-expr_at[n,is_seq] where n == 18: cond=expr_at[18,1] '?' lhs=expr_at[18,1] ':' rhs=expr_at[17,is_seq] {new ExprCobd($cond, $lhs, $rhs)};
-
-expr_at[n,is_seq] where n == 17: lhs=expr_at[17,1] '||' rhs=expr_at[16,is_seq] {new ExprBinOp(BinOp::LogicOr, $lhs, $rhs)};
-expr_at[n,is_seq] where n == 16: lhs=expr_at[16,1] '&&' rhs=expr_at[15,is_seq] {new ExprBinOp(BinOp::LogicAnd, $lhs, $rhs)};
-
-expr_at[n,is_seq] where n == 15: lhs=expr_at[15,1] '|' rhs=expr_at[14,is_seq] {new ExprBinOp(BinOp::BitOr, $lhs, $rhs)};
-expr_at[n,is_seq] where n == 14: lhs=expr_at[14,1] '^' rhs=expr_at[13,is_seq] {new ExprBinOp(BinOp::BitXor, $lhs, $rhs)};
-expr_at[n,is_seq] where n == 13: lhs=expr_at[13,1] '&' rhs=expr_at[12,is_seq] {new ExprBinOp(BinOp::BitANd, $lhs, $rhs)};
-
-expr_at[n, is_seq] where n > 0: expr_at[n - 1, is_seq];
-
-expr_at[n,is_seq] where n == 0: expr_prim;
-
-expr_prim: '(' expr ')' {$expr};
-expr_prim: identifier {};
-expr_prim: string_lit {};
-expr_prim: decimal_lit {};
-expr_prim: hex_lit {};
-expr_prim: float_lit {};
-
-type: qualid {new Type($qualid)};
-
-access_modifier: {AccessModifier::Default};
-access_modifier: public {AccessModifier::Public};
-access_modifier: private {AccessModifier::Private};
-access_modifier: protected {AccessModifier::Protected};
-access_modifier: internal {AccessModifier::Internal};
-
-extends_clause: {nullptr};
-extends_clause: extends qualid {$qualid};
-
-extends_interface_clause: {nullptr};
-extends_interface_clause: extends qualid_list {qualid_list};
-
-implements_clause: {nullptr};
-implements_clause: implements qualid_list {$qualid_list};
-
-qualid_list: qualid {new ConsList<QID*>(nullptr, $qualid)};
-qualid_list: qualid_list ',' qualid {new ConsList<QID*>($qualid_list, $qualid)};
-
 
 [lexer.fragments]
 
@@ -264,38 +85,27 @@ whitespace:     [ \t];
 newline:        [\n]|[\r\n]|[\r];
 id_start_char:  <letter> | _;
 id_char:        <letter> | <digit> | _;
-integer:        0 | <non_zero_digit> <digit>*;
+integer:        0 | <non_zero_digit> <digit>* (\'<digit>+)*;
 hex_digit:      [0-9a-fA-F];
-
 
 [lexer.grammar]
 
 import;
-package;
-class;
-extends;
-implements;
-interface;
-function;
-
-public;
-private;
-protected;
-internal;
 
 identifier:     <id_start_char> <id_char>*;
 
 decimal_lit:        <integer>;
-float_lit:          <integer> [.] <digit>+ ([eE][+\-]?[0-9]+)?;
-hex_lit:            0x <hex_digit>+;
+float_lit:          <integer> [.] <digit>+ (\'<digit>+)* ([eE][+\-]?[0-9]+(\'[0-9]+)*)?;
+hex_lit:            0x <hex_digit>+(\'<hex_digit>+)*;
+bin_lit:            0b [01]+(\'[0-1]+)*;
 
 space:          (" "|\r\n|\n|\r|\t)+;
 
 comment:        "//" [^\n\r]+ <newline>?;
 ml_comment:     "/*" ([^*]|[*]*[^/*])* [*]* "*/";
 
-string_lit:        \" ( \\[nrt0\\"] | \\x <hex_digit>{2} | [^"\\] )* \";
-string_lit:        \' ( \\[nrt0\\"] | \\x <hex_digit>{2} | [^"\\] )* \';
+string_lit:         \" ( \\[nrt0\\"] | \\x <hex_digit>{2} | [^"\\] )* \";
+string_lit:         \' ( \\[nrt0\\'] | \\x <hex_digit>{2} | [^'\\] )* \';
 
 "(";
 ")";
@@ -304,10 +114,10 @@ string_lit:        \' ( \\[nrt0\\"] | \\x <hex_digit>{2} | [^"\\] )* \';
 "{";
 "}";
 
-'&&';
-'||';
-
 "#";
+
+"&&";
+"||";
 
 "=";
 "+=";
@@ -316,8 +126,6 @@ string_lit:        \' ( \\[nrt0\\"] | \\x <hex_digit>{2} | [^"\\] )* \';
 "/=";
 "%=";
 "&=";
-"&&=";
-"||=";
 "|=";
 "^=";
 "<<=";
@@ -353,3 +161,43 @@ string_lit:        \' ( \\[nrt0\\"] | \\x <hex_digit>{2} | [^"\\] )* \';
 ":";
 ";";
 "?";
+
+[parser.expose]
+
+S;
+
+[parser.types]
+
+S: "int";
+#param_list: "List<int>*";
+vardef: "int";
+
+[parser.grammar]
+
+S: {nullptr};
+S: S vardef {nullptr};
+
+#vardef: identifier '=' e ';' {writevar($identifier,$e)};
+vardef: identifier ';' {writevar($identifier)};
+
+
+
+# S: e {$e};
+
+# e: e '+' f {$e + $f};
+# e: e '-' f {$e - $f};
+# e: f;
+# f: f '*' t {$f * $t};
+# f: f '/' t {$f / $t};
+# f: t;
+# t: '(' e ')' {$e};
+# t: identifier '(' param_list ')' {exec($identifier, $param_list)};
+# t: decimal_lit {atoi($decimal_lit)};
+# t: identifier {var($identifier)};
+#
+# param_list: {nullptr};
+# param_list: param_list_head;
+# param_list_head: e {new List<int>($e, nullptr)};
+# param_list_head: param_list_head ',' e {new List<int>($param_list_head, $e)};
+#
+#

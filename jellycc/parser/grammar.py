@@ -2,7 +2,7 @@ import json
 from abc import abstractmethod
 from typing import Dict, List, Tuple, Iterable, Optional, Set
 
-from jellycc.project.grammar import Terminal, CodeBlock
+from jellycc.project.grammar import Terminal, CodeBlock, SharedGrammar
 from jellycc.utils.error import CCError
 from jellycc.utils.source import SrcLoc
 
@@ -28,6 +28,9 @@ class TypeVoid(Type):
 
 	def __str__(self) -> str:
 		return "void"
+
+
+Void = TypeVoid()
 
 
 class TypeConstant(Type):
@@ -185,7 +188,8 @@ class SymbolNonTerminal(Symbol):
 
 
 class ParserGrammar:
-	def __init__(self) -> None:
+	def __init__(self, shared: SharedGrammar) -> None:
+		self.shared: SharedGrammar = shared
 		self.terminal_map: Dict[str, SymbolTerminal] = dict()
 		self.terminals: List[SymbolTerminal] = []
 		self.nonterminals: List[SymbolNonTerminal] = []
@@ -197,10 +201,13 @@ class ParserGrammar:
 		self.parser_header: Optional[CodeBlock] = None
 		self.parser_source: Optional[CodeBlock] = None
 		self.prefix: str = "PP"
+		self.ns: str = "pp"
 		self.core_header_path: Optional[str] = None
 		self.core_source_path: Optional[str] = None
 		self.vm_header_path: Optional[str] = None
 		self.vm_source_path: Optional[str] = None
+		self.vm_args: List[Tuple[SrcLoc, str, str]] = []
+		self.vm_actions: Dict[str, Tuple[SrcLoc, str, Tuple[SrcLoc, str]]] = dict()
 
 	def register_action(self, action: Action) -> None:
 		action.idx = len(self.actions)

@@ -27,8 +27,17 @@ class Project:
 	def add_type(self, loc: SrcLoc, name: str, type: str) -> None:
 		self.parser_generator.types.append((loc, name, type))
 
+	def add_vm_arg(self, loc: SrcLoc, name: str, type: str) -> None:
+		self.parser_generator.grammar.vm_args.append((loc, name, type))
+
 	def add_expose(self, loc: SrcLoc, name: str) -> None:
 		self.parser_generator.exposed_nt.append((loc, name))
+
+	def register_vm_action(self, loc: SrcLoc, name: str, action: Tuple[SrcLoc, str]):
+		old_val = self.parser_generator.grammar.vm_actions.get(name, None)
+		if old_val is not None:
+			raise CCError(loc, f"{name} vm action already defined at {old_val[0]}")
+		self.parser_generator.grammar.vm_actions[name] = (loc, name, action)
 
 	def add_nt_rule(
 		self,

@@ -1,127 +1,37 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="5bc0cf74-ef40-4076-a3ab-521a1dbb6c85" name="Default Changelist" comment="" />
+    <list default="true" id="5bc0cf74-ef40-4076-a3ab-521a1dbb6c85" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/examples/jellyscript.jcc" beforeDir="false" afterPath="$PROJECT_DIR$/examples/jellyscript.jcc" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/examples/test1.jcc" beforeDir="false" afterPath="$PROJECT_DIR$/examples/test1.jcc" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/jellycc/__main__.py" beforeDir="false" afterPath="$PROJECT_DIR$/jellycc/__main__.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/jellycc/codegen/codegen.py" beforeDir="false" afterPath="$PROJECT_DIR$/jellycc/codegen/codegen.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/jellycc/lexer/codegen.py" beforeDir="false" afterPath="$PROJECT_DIR$/jellycc/lexer/codegen.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/jellycc/lexer/lexer.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/jellycc/lexer/lexer.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/jellycc/lexer/lexer.shared.inc" beforeDir="false" afterPath="$PROJECT_DIR$/jellycc/lexer/lexer.shared.inc" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/jellycc/lexer/phf.py" beforeDir="false" afterPath="$PROJECT_DIR$/jellycc/lexer/phf.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/jellycc/lexer/run.py" beforeDir="false" afterPath="$PROJECT_DIR$/jellycc/lexer/run.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/jellycc/parser/codegen.py" beforeDir="false" afterPath="$PROJECT_DIR$/jellycc/parser/lr/codegen.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/jellycc/parser/grammar.py" beforeDir="false" afterPath="$PROJECT_DIR$/jellycc/parser/grammar.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/jellycc/parser/lalr.py" beforeDir="false" afterPath="$PROJECT_DIR$/jellycc/parser/lr/lalr.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/jellycc/parser/lr1.py" beforeDir="false" afterPath="$PROJECT_DIR$/jellycc/parser/lr/lr1.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/jellycc/parser/parser_core.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/jellycc/parser/lr/parser_core.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/jellycc/parser/parser_core.h" beforeDir="false" afterPath="$PROJECT_DIR$/jellycc/parser/lr/parser_core.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/jellycc/parser/parser_vm.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/jellycc/parser/lr/parser_vm.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/jellycc/parser/parser_vm.h" beforeDir="false" afterPath="$PROJECT_DIR$/jellycc/parser/lr/parser_vm.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/jellycc/parser/recovery.py" beforeDir="false" afterPath="$PROJECT_DIR$/jellycc/parser/lr/recovery.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/jellycc/parser/run.py" beforeDir="false" afterPath="$PROJECT_DIR$/jellycc/parser/run.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/jellycc/project/grammar.py" beforeDir="false" afterPath="$PROJECT_DIR$/jellycc/project/grammar.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/jellycc/project/parser.py" beforeDir="false" afterPath="$PROJECT_DIR$/jellycc/project/parser.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/jellycc/project/project.py" beforeDir="false" afterPath="$PROJECT_DIR$/jellycc/project/project.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/jellycc/utils/helpers.py" beforeDir="false" afterPath="$PROJECT_DIR$/jellycc/utils/helpers.py" afterDir="false" />
+    </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
-  </component>
-  <component name="FileEditorManager">
-    <leaf SIDE_TABS_SIZE_LIMIT_KEY="375">
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/jellycc/lexer/lexer.cpp">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="244">
-              <caret line="98" column="69" lean-forward="true" selection-start-line="98" selection-start-column="69" selection-end-line="98" selection-end-column="69" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/jellycc/lexer/lexer.shared.inc">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="304">
-              <caret line="16" column="17" lean-forward="true" selection-start-line="16" selection-start-column="17" selection-end-line="16" selection-end-column="17" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/jellycc/lexer/phf.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="1292">
-              <caret line="68" column="20" selection-start-line="68" selection-start-column="20" selection-end-line="68" selection-end-column="20" />
-              <folding>
-                <element signature="e#0#11#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/jellycc/lexer/nfa.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-1092">
-              <caret line="15" column="27" selection-start-line="15" selection-start-column="27" selection-end-line="15" selection-end-column="27" />
-              <folding>
-                <element signature="e#0#72#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/jellycc/lexer/lexer.h">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="38">
-              <caret line="2" selection-start-line="2" selection-end-line="3" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/jellycc/__main__.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="190">
-              <caret line="10" column="74" selection-start-line="10" selection-start-column="74" selection-end-line="10" selection-end-column="74" />
-              <folding>
-                <element signature="e#0#48#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/jellycc/lexer/codegen.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="162">
-              <caret line="20" column="20" selection-start-line="20" selection-start-column="20" selection-end-line="20" selection-end-column="20" />
-              <folding>
-                <element signature="e#0#11#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/jellycc/lexer/grammar.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="171">
-              <caret line="9" column="33" selection-start-line="9" selection-start-column="33" selection-end-line="9" selection-end-column="33" />
-              <folding>
-                <element signature="e#0#27#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/jellycc/lexer/run.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="195">
-              <caret line="46" lean-forward="true" selection-start-line="46" selection-end-line="46" />
-              <folding>
-                <element signature="e#0#30#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/jellycc/lexer/dfa.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="314">
-              <caret line="199" column="19" selection-start-line="199" selection-start-column="19" selection-end-line="199" selection-end-column="19" />
-              <folding>
-                <element signature="e#0#35#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-    </leaf>
   </component>
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
@@ -130,162 +40,29 @@
       </list>
     </option>
   </component>
-  <component name="FindInProjectRecents">
-    <findStrings>
-      <find>for</find>
-      <find>semi</find>
-      <find>colon</find>
-      <find>':'</find>
-      <find>types</find>
-      <find>terminals</find>
-      <find>TypeVoid</find>
-      <find>add_terminal</find>
-      <find>get_</find>
-      <find>NonTerminal</find>
-      <find>Terminal</find>
-      <find>sharp</find>
-      <find>lookahe</find>
-      <find>parse_re</find>
-      <find>YY_</find>
-      <find>UnrollCount</find>
-      <find>export:</find>
-      <find>max_uniq</find>
-      <find>AcceptType</find>
-      <find>Shift</find>
-      <find>Reduce</find>
-      <find>PP_</find>
-      <find>${lexer_prefix}_</find>
-      <find>carry</find>
-    </findStrings>
-    <replaceStrings>
-      <replace>SymbolNonTerminal</replace>
-      <replace>SymbolTerminal</replace>
-      <replace>${lexer_prefix}_</replace>
-      <replace>${lexer_unroll_count}</replace>
-      <replace>${parser_prefix}</replace>
-      <replace>${parser_prefix}_</replace>
-    </replaceStrings>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
-  <component name="IdeDocumentHistory">
-    <option name="CHANGED_PATHS">
-      <list>
-        <option value="$PROJECT_DIR$/jellycc/lexer/regex.py" />
-        <option value="$PROJECT_DIR$/jellycc/utils/source.py" />
-        <option value="$PROJECT_DIR$/mypy_config.ini" />
-        <option value="$PROJECT_DIR$/jellycc/templates/lexer.h" />
-        <option value="$PROJECT_DIR$/jellycc/utils/error.py" />
-        <option value="$PROJECT_DIR$/jellycc/parser/parsergrammar.py" />
-        <option value="$PROJECT_DIR$/jellycc/parser/template.py" />
-        <option value="$PROJECT_DIR$/jellycc/project/sharedgrammar.py" />
-        <option value="$PROJECT_DIR$/jellycc/parser/lr1.py" />
-        <option value="$PROJECT_DIR$/jellycc/lexer/dfa_minimize.py" />
-        <option value="$PROJECT_DIR$/jellycc/lexer/regexp.py" />
-        <option value="$PROJECT_DIR$/jellycc/lexer/nfa.py" />
-        <option value="$PROJECT_DIR$/jellycc/project/parser.py" />
-        <option value="$PROJECT_DIR$/jellycc/lexer/dfa.py" />
-        <option value="$PROJECT_DIR$/jellycc/utils/parser.py" />
-        <option value="$PROJECT_DIR$/jellycc/codegen/Codegen.py" />
-        <option value="$PROJECT_DIR$/jellycc/regexp.py" />
-        <option value="$PROJECT_DIR$/jellycc/lexer/gen.py" />
-        <option value="$PROJECT_DIR$/jellycc/utils/helpers.py" />
-        <option value="$PROJECT_DIR$/.out/lexer.h" />
-        <option value="$PROJECT_DIR$/.out/lexer.cpp" />
-        <option value="$PROJECT_DIR$/jellycc/project/project.py" />
-        <option value="$PROJECT_DIR$/jellycc/project/grammar.py" />
-        <option value="$PROJECT_DIR$/jellycc/parser/codegen.py" />
-        <option value="$PROJECT_DIR$/jellycc/parser/parser_core.cpp" />
-        <option value="$PROJECT_DIR$/jellycc/parser/parser_core.h" />
-        <option value="$PROJECT_DIR$/jellycc/parser/parser_vm.h" />
-        <option value="$PROJECT_DIR$/jellycc/parser/parser_vm.cpp" />
-        <option value="$PROJECT_DIR$/examples/test1.jcc" />
-        <option value="$PROJECT_DIR$/jellycc/parser/grammar.py" />
-        <option value="$PROJECT_DIR$/jellycc/parser/recovery.py" />
-        <option value="$PROJECT_DIR$/jellycc/parser/run.py" />
-        <option value="$PROJECT_DIR$/jellycc/parser/lalr.py" />
-        <option value="$PROJECT_DIR$/examples/jellyscript.jcc" />
-        <option value="$PROJECT_DIR$/jellycc/codegen/codegen.py" />
-        <option value="$PROJECT_DIR$/jellycc/lexer/lexer.h" />
-        <option value="$PROJECT_DIR$/jellycc/lexer/grammar.py" />
-        <option value="$PROJECT_DIR$/jellycc/__main__.py" />
-        <option value="$PROJECT_DIR$/jellycc/lexer/lexer.cpp" />
-        <option value="$PROJECT_DIR$/jellycc/lexer/run.py" />
-        <option value="$PROJECT_DIR$/jellycc/lexer/codegen.py" />
-        <option value="$PROJECT_DIR$/jellycc/lexer/phf.py" />
-        <option value="$PROJECT_DIR$/jellycc/lexer/lexer.shared.inc" />
-      </list>
-    </option>
-  </component>
-  <component name="ProjectFrameBounds" extendedState="6">
-    <option name="x" value="312" />
-    <option name="y" value="4" />
-    <option name="width" value="1400" />
-    <option name="height" value="996" />
-  </component>
-  <component name="ProjectView">
-    <navigator proportions="" version="1">
-      <foldersAlwaysOnTop value="true" />
-    </navigator>
-    <panes>
-      <pane id="Scope" />
-      <pane id="ProjectPane">
-        <subPane>
-          <expand>
-            <path>
-              <item name="jellycc" type="b2602c69:ProjectViewProjectNode" />
-              <item name="jellycc" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="jellycc" type="b2602c69:ProjectViewProjectNode" />
-              <item name="jellycc" type="462c0819:PsiDirectoryNode" />
-              <item name=".output" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="jellycc" type="b2602c69:ProjectViewProjectNode" />
-              <item name="jellycc" type="462c0819:PsiDirectoryNode" />
-              <item name=".output" type="462c0819:PsiDirectoryNode" />
-              <item name="jellyscript" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="jellycc" type="b2602c69:ProjectViewProjectNode" />
-              <item name="jellycc" type="462c0819:PsiDirectoryNode" />
-              <item name="examples" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="jellycc" type="b2602c69:ProjectViewProjectNode" />
-              <item name="jellycc" type="462c0819:PsiDirectoryNode" />
-              <item name="jellycc" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="jellycc" type="b2602c69:ProjectViewProjectNode" />
-              <item name="jellycc" type="462c0819:PsiDirectoryNode" />
-              <item name="jellycc" type="462c0819:PsiDirectoryNode" />
-              <item name="codegen" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="jellycc" type="b2602c69:ProjectViewProjectNode" />
-              <item name="jellycc" type="462c0819:PsiDirectoryNode" />
-              <item name="jellycc" type="462c0819:PsiDirectoryNode" />
-              <item name="lexer" type="462c0819:PsiDirectoryNode" />
-            </path>
-          </expand>
-          <select />
-        </subPane>
-      </pane>
-    </panes>
+  <component name="ProjectId" id="1QPjdcyseABBneaRQM77NUKFMOG" />
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true">
+    <ConfirmationsSetting value="1" id="Add" />
   </component>
   <component name="PropertiesComponent">
-    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+    <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/jellycc/parser/ll" />
     <property name="restartRequiresConfirmation" value="false" />
-    <property name="settings.editor.selected.configurable" value="Errors" />
+    <property name="settings.editor.selected.configurable" value="reference.settingsdialog.IDE.editor.colors.General" />
   </component>
   <component name="RecentsManager">
-    <key name="CopyFile.RECENT_KEYS">
-      <recent name="D:\workspace\jellycc\examples" />
-      <recent name="D:\workspace\jellycc\jellycc\parser" />
-    </key>
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="D:\workspace\jellycc\jellycc\parser\lr" />
       <recent name="D:\workspace\jellycc\jellycc\parser" />
       <recent name="D:\workspace\jellycc\jellycc\lexer" />
+    </key>
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="D:\workspace\jellycc\jellycc\parser\ll" />
+      <recent name="D:\workspace\jellycc\examples" />
+      <recent name="D:\workspace\jellycc\jellycc\parser" />
     </key>
   </component>
   <component name="RunDashboard">
@@ -300,7 +77,28 @@
       </list>
     </option>
   </component>
-  <component name="RunManager" selected="Python.jellycc">
+  <component name="RunManager" selected="Python.jellycc - test">
+    <configuration name="jellycc - test" type="PythonConfigurationType" factoryName="Python">
+      <module name="jellycc" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="D:\Soft\Python36\python.exe" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
+      <option name="IS_MODULE_SDK" value="false" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <option name="SCRIPT_NAME" value="jellycc" />
+      <option name="PARAMETERS" value="examples/test1.jcc --base-dir parsertest --lexer-header .output/jellyscript/lexer.h --lexer-source .output/jellyscript/lexer.cpp --lexer-prefix LEX --lexer-ns lex --parser-header .output/jellyscript/parser.h --parser-source .output/jellyscript/parser.cpp" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="true" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
+      <method v="2" />
+    </configuration>
     <configuration name="jellycc" type="PythonConfigurationType" factoryName="Python" nameIsGenerated="true">
       <module name="jellycc" />
       <option name="INTERPRETER_OPTIONS" value="" />
@@ -314,7 +112,7 @@
       <option name="ADD_CONTENT_ROOTS" value="true" />
       <option name="ADD_SOURCE_ROOTS" value="true" />
       <option name="SCRIPT_NAME" value="jellycc" />
-      <option name="PARAMETERS" value="examples/jellyscript.jcc --lexer-header C:\Users\meduzik\source\repos\c++test\lexer.h --lexer-source C:\Users\meduzik\source\repos\c++test\lexer.cpp --lexer-prefix LEX --lexer-ns lex" />
+      <option name="PARAMETERS" value="examples/jellyscript.jcc --lexer-header .output/jellyscript/lexer.h --lexer-source .output/jellyscript/lexer.cpp --lexer-prefix LEX --lexer-ns lex --parser-header .output/jellyscript/parser.h --parser-source .output/jellyscript/parser.cpp" />
       <option name="SHOW_COMMAND_LINE" value="false" />
       <option name="EMULATE_TERMINAL" value="false" />
       <option name="MODULE_MODE" value="true" />
@@ -345,6 +143,7 @@
     </configuration>
     <list>
       <item itemvalue="Python.jellycc" />
+      <item itemvalue="Python.jellycc - test" />
       <item itemvalue="Python.regexp" />
     </list>
     <recent_temporary>
@@ -366,376 +165,17 @@
     </task>
     <servers />
   </component>
-  <component name="ToolWindowManager">
-    <frame x="-4" y="-4" width="1928" height="1044" extended-state="6" />
-    <editor active="true" />
-    <layout>
-      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.24973601" />
-      <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
-      <window_info id="Favorites" order="2" side_tool="true" />
-      <window_info anchor="bottom" id="Message" order="0" />
-      <window_info anchor="bottom" id="Find" order="1" weight="0.32964602" />
-      <window_info anchor="bottom" id="Run" order="2" weight="0.32964602" />
-      <window_info anchor="bottom" id="Debug" order="3" sideWeight="0.49894404" visible="true" weight="0.40044248" />
-      <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
-      <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
-      <window_info anchor="bottom" id="TODO" order="6" />
-      <window_info anchor="bottom" id="Version Control" order="7" />
-      <window_info anchor="bottom" id="Mypy" order="8" sideWeight="0.49947202" weight="0.32964602" />
-      <window_info anchor="bottom" id="Terminal" order="9" weight="0.32964602" />
-      <window_info anchor="bottom" id="Event Log" order="10" sideWeight="0.50105596" side_tool="true" weight="0.39933628" />
-      <window_info anchor="bottom" id="Python Console" order="11" />
-      <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
-      <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
-      <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
-    </layout>
-  </component>
-  <component name="editorHistoryManager">
-    <entry file="file://$APPLICATION_HOME_DIR$/helpers/typeshed/stdlib/3/typing.pyi">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="568">
-          <caret line="557" column="8" selection-start-line="557" selection-start-column="8" selection-end-line="557" selection-end-column="8" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/jellycc/__init__.py">
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/jellycc/project/__init__.py">
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/jellycc/utils/__init__.py">
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/mypy_config.ini">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="228">
-          <caret line="12" selection-start-line="12" selection-end-line="12" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/jellycc/utils/error.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="171">
-          <caret line="11" selection-start-line="11" selection-end-line="11" />
-          <folding>
-            <element signature="e#0#27#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://D:/Soft/Python36/Lib/runpy.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="170">
-          <caret line="84" selection-start-line="84" selection-end-line="84" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/jellycc/regexp.py" />
-    <entry file="file://$APPLICATION_HOME_DIR$/helpers/pydev/_pydev_imps/_pydev_execfile.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="323">
-          <caret line="17" column="30" lean-forward="true" selection-start-line="17" selection-start-column="30" selection-end-line="17" selection-end-column="30" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://D:/Soft/Python36/Lib/tokenize.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="170">
-          <caret line="451" selection-start-line="451" selection-end-line="451" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/jellycc/lexer/dfa_minimize.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1361">
-          <caret line="104" column="30" selection-start-line="104" selection-start-column="30" selection-end-line="104" selection-end-column="30" />
-          <folding>
-            <element signature="e#0#61#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/jellycc/lexer/regexp.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="209">
-          <caret line="38" lean-forward="true" selection-start-line="38" selection-end-line="38" />
-          <folding>
-            <element signature="e#0#30#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/jellycc/utils/helpers.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="190">
-          <caret line="10" selection-start-line="10" selection-end-line="10" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/.out/lexer.cpp" />
-    <entry file="file://$PROJECT_DIR$/.out/lexer.h" />
-    <entry file="file://$USER_HOME$/.PyCharmCE2019.1/system/python_stubs/-1040590876/builtins.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="290">
-          <caret line="299" column="4" selection-start-line="299" selection-start-column="4" selection-end-line="299" selection-end-column="4" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/jellycc/project/project.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="551">
-          <caret line="37" column="37" selection-start-line="37" selection-start-column="37" selection-end-line="37" selection-end-column="37" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/jellycc/project/parser.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="190">
-          <caret line="19" selection-start-line="19" selection-end-line="19" />
-          <folding>
-            <element signature="e#0#16#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/jellycc/project/grammar.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="304">
-          <caret line="19" lean-forward="true" selection-start-line="19" selection-end-line="19" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/jellycc/parser/template.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="2090">
-          <caret line="118" column="20" lean-forward="true" selection-start-line="118" selection-start-column="20" selection-end-line="118" selection-end-column="20" />
-          <folding>
-            <element signature="e#0#9#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/jellycc/utils/parser.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-926">
-          <caret line="72" selection-start-line="72" selection-end-line="72" />
-          <folding>
-            <element signature="e#0#16#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/jellycc/parser/codegen.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="874">
-          <caret line="56" column="43" selection-start-line="56" selection-start-column="43" selection-end-line="56" selection-end-column="43" />
-          <folding>
-            <element signature="e#0#11#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/jellycc/parser/lr1.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="817">
-          <caret line="45" column="19" selection-start-line="45" selection-start-column="9" selection-end-line="45" selection-end-column="19" />
-          <folding>
-            <element signature="e#0#49#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/jellycc/parser/parser_core.h">
-      <provider selected="true" editor-type-id="text-editor">
-        <state>
-          <caret selection-end-column="12" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/jellycc/parser/parser_vm.h">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="266">
-          <caret line="14" selection-start-line="14" selection-end-line="14" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/jellycc/parser/parser_vm.cpp">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="38">
-          <caret line="2" column="18" selection-start-line="2" selection-start-column="18" selection-end-line="2" selection-end-column="18" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/jellycc/parser/parser_core.cpp">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1539">
-          <caret line="81" column="40" selection-start-line="81" selection-start-column="40" selection-end-line="81" selection-end-column="40" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/jellycc/parser/recovery.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="589">
-          <caret line="35" column="38" selection-start-line="35" selection-start-column="8" selection-end-line="35" selection-end-column="38" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/jellycc/parser/lalr.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="6365">
-          <caret line="345" column="18" selection-start-line="345" selection-start-column="18" selection-end-line="345" selection-end-column="18" />
-          <folding>
-            <element signature="e#0#35#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/jellycc/parser/run.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="3667">
-          <caret line="206" column="44" selection-start-line="206" selection-start-column="44" selection-end-line="206" selection-end-column="44" />
-          <folding>
-            <element signature="e#0#9#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/examples/jellyscript.jcc">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="3971">
-          <caret line="209" column="116" selection-start-line="209" selection-start-column="116" selection-end-line="209" selection-end-column="116" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/jellycc/parser/grammar.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1862">
-          <caret line="104" selection-start-line="104" selection-end-line="104" />
-          <folding>
-            <element signature="e#0#11#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/jellycc/utils/source.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="315">
-          <caret line="62" selection-start-line="62" selection-end-line="62" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/examples/test1.jcc">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="187">
-          <caret line="199" column="53" selection-start-line="199" selection-start-column="53" selection-end-line="199" selection-end-column="53" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/.output/jellyscript/lexer.h">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-592">
-          <caret line="63" column="23" selection-start-line="63" selection-start-column="23" selection-end-line="63" selection-end-column="23" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/jellycc/codegen/codegen.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="38">
-          <caret line="2" column="9" selection-start-line="2" selection-start-column="9" selection-end-line="2" selection-end-column="9" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/jellycc/lexer/grammar.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="171">
-          <caret line="9" column="33" selection-start-line="9" selection-start-column="33" selection-end-line="9" selection-end-column="33" />
-          <folding>
-            <element signature="e#0#27#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/jellycc/__main__.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="190">
-          <caret line="10" column="74" selection-start-line="10" selection-start-column="74" selection-end-line="10" selection-end-column="74" />
-          <folding>
-            <element signature="e#0#48#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/jellycc/lexer/lexer.cpp">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="244">
-          <caret line="98" column="69" lean-forward="true" selection-start-line="98" selection-start-column="69" selection-end-line="98" selection-end-column="69" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/jellycc/lexer/nfa.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-1092">
-          <caret line="15" column="27" selection-start-line="15" selection-start-column="27" selection-end-line="15" selection-end-column="27" />
-          <folding>
-            <element signature="e#0#72#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/jellycc/lexer/dfa.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="314">
-          <caret line="199" column="19" selection-start-line="199" selection-start-column="19" selection-end-line="199" selection-end-column="19" />
-          <folding>
-            <element signature="e#0#35#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/jellycc/lexer/run.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="195">
-          <caret line="46" lean-forward="true" selection-start-line="46" selection-end-line="46" />
-          <folding>
-            <element signature="e#0#30#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/jellycc/lexer/phf.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1292">
-          <caret line="68" column="20" selection-start-line="68" selection-start-column="20" selection-end-line="68" selection-end-column="20" />
-          <folding>
-            <element signature="e#0#11#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/jellycc/lexer/codegen.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="162">
-          <caret line="20" column="20" selection-start-line="20" selection-start-column="20" selection-end-line="20" selection-end-column="20" />
-          <folding>
-            <element signature="e#0#11#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/jellycc/lexer/lexer.h">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="38">
-          <caret line="2" selection-start-line="2" selection-end-line="3" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/jellycc/lexer/lexer.shared.inc">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="304">
-          <caret line="16" column="17" lean-forward="true" selection-start-line="16" selection-start-column="17" selection-end-line="16" selection-end-column="17" />
-        </state>
-      </provider>
-    </entry>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State>
+              <option name="COLUMN_ORDER" />
+            </State>
+          </value>
+        </entry>
+      </map>
+    </option>
   </component>
 </project>

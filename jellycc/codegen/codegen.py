@@ -51,8 +51,8 @@ class Template:
 		self.path: str = path
 		self.cmds: List[TemplateCommand] = []
 
-	def run(self, file: str, fp: IO[str], subst: Callable[['CodePrinter', str], None]) -> None:
-		printer = CodePrinter(file, fp)
+	def run(self, base_dir: str, file: str, fp: IO[str], subst: Callable[['CodePrinter', str], None]) -> None:
+		printer = CodePrinter(base_dir, file, fp)
 		self.print(printer, subst)
 
 	def print(self, printer: 'CodePrinter', subst: Callable[['CodePrinter', str], None]) -> None:
@@ -94,7 +94,7 @@ def parse_template(path: str) -> Template:
 
 
 class CodePrinter:
-	def __init__(self, file: str, fp: IO[str]) -> None:
+	def __init__(self, base_path: str, file: str, fp: IO[str]) -> None:
 		self.file: str = file
 		self.line: int = 0
 		self.col: int = 0
@@ -103,6 +103,8 @@ class CodePrinter:
 
 		self._indent: List[str] = []
 		self._line_empty: bool = True
+
+		self.base_path: str = base_path
 
 	def _write_inline(self, text: str) -> None:
 		if len(text) == 0:
@@ -162,10 +164,10 @@ class CodePrinter:
 		if not self._line_empty:
 			self._endl()
 		old_indent = self.set_indent([])
-		self.writeln(f"#line {loc.line + 2} {json.dumps(loc.file)}")
-		self.writeln(' ' * loc.col)
+		# self.writeln(f"#line {loc.line + 1} {json.dumps(os.path.relpath(loc.file, self.base_path))}")
+		self.write(' ' * loc.col)
 		self.writeln(text)
-		self.writeln(f"#line {self.line + 2} {json.dumps(self.file)}")
+		# self.writeln(f"#line {self.line + 2} {json.dumps(os.path.relpath(self.file, self.base_path))}")
 		self.set_indent(old_indent)
 
 	def indented(self, s: str = '\t') -> ContextManager[None]:

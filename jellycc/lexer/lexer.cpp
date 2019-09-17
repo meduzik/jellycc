@@ -15,6 +15,7 @@ struct LexerState {
 
 	uint16_t* tokens;
 	uint32_t* offsets;
+
 	size_t token_idx;
 	size_t token_offset;
 	size_t token_max;
@@ -103,6 +104,7 @@ static void loop(LexerState* lex) {
 
 		state = (uint16_t)(trans & ~1);
 		token_idx += (trans & 1);
+
 		input_pos++;
 	}
 
@@ -124,6 +126,7 @@ static void finalize(LexerState* lex) {
 
 	*token = *(const uint16_t*)((const char*)accept_table + state);
 	*offset = (uint32_t)(lex->input - lex->input_begin);
+
 	token_idx += (trans & 1);
 
 	lex->token_idx = token_idx;

@@ -5,7 +5,7 @@ from itertools import chain
 import sys
 
 from jellycc.parser.grammar import Production, SymbolNonTerminal, SymbolTerminal, Symbol, ParserGrammar
-from jellycc.parser.lr1 import Reduce, AcceptType, RejectType, LR1State, Shift, Accept
+from jellycc.parser.lr.lr1 import Reduce, AcceptType, LR1State, Shift, Accept
 from jellycc.project.grammar import Terminal
 from jellycc.utils.helpers import head
 from jellycc.utils.source import SrcLoc

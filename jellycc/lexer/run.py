@@ -38,7 +38,7 @@ class LexerGenerator:
 		if not self.shared.term_error:
 			raise CCError(None, "no {error} terminal found")
 
-		builder = Builder(self.shared.term_error, self.nfa_rules, 2)
+		builder = Builder(self.shared.term_error, self.nfa_rules, 0)
 		dfa = builder.build(self.nfa_init)
 		keywords = builder.keywords
 		min_dfa = minimize(dfa)
@@ -48,12 +48,7 @@ class LexerGenerator:
 		list_states: List[DFAState] = []
 		min_dfa.visit(lambda state: list_states.append(state))
 
-		phf = PHF()
-		for keyword in keywords.values():
-			phf.add_keyword(keyword)
-		phf.build()
-
-		codegen = Codegen(self.lexer_grammar, min_dfa, phf)
+		codegen = Codegen(self.lexer_grammar, min_dfa)
 		codegen.run()
 
 	def inject_error_state(self, initial_state: DFAState) -> None:

@@ -1,4 +1,3 @@
-import json
 from typing import List, Dict, Set, Tuple, Optional
 
 from jellycc.codegen.codegen import CodePrinter, parse_template
@@ -7,8 +6,8 @@ from jellycc.codegen.codegen import CodePrinter, parse_template
 import os
 
 from jellycc.parser.grammar import ParserGrammar, SymbolNonTerminal, Production, SymbolTerminal
-from jellycc.parser.lalr import LRTable, LR0Set
-from jellycc.parser.lr1 import LR1State, Shift, Reduce, AcceptType, RejectType, Accept
+from jellycc.parser.lr.lalr import LRTable
+from jellycc.parser.lr.lr1 import LR1State, Shift, Reduce, AcceptType, Accept
 
 AcceptBit = 1
 

@@ -1,8 +1,8 @@
 from typing import Optional, Dict, Tuple, List, Set
 
 from jellycc.parser.grammar import ParserGrammar, SymbolTerminal, SymbolNonTerminal, Production
-from jellycc.parser.lalr import LRTable
-from jellycc.parser.lr1 import LR1State, Shift, Reduce
+from jellycc.parser.lr.lalr import LRTable
+from jellycc.parser.lr.lr1 import LR1State, Shift, Reduce
 
 
 class Node:
