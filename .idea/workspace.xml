@@ -6,32 +6,25 @@
       <change beforePath="$PROJECT_DIR$/examples/jellyscript.jcc" beforeDir="false" afterPath="$PROJECT_DIR$/examples/jellyscript.jcc" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/examples/test1.jcc" beforeDir="false" afterPath="$PROJECT_DIR$/examples/test1.jcc" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/jellycc/__main__.py" beforeDir="false" afterPath="$PROJECT_DIR$/jellycc/__main__.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/jellycc/codegen/codegen.py" beforeDir="false" afterPath="$PROJECT_DIR$/jellycc/codegen/codegen.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/jellycc/lexer/codegen.py" beforeDir="false" afterPath="$PROJECT_DIR$/jellycc/lexer/codegen.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/jellycc/lexer/lexer.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/jellycc/lexer/lexer.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/jellycc/lexer/lexer.shared.inc" beforeDir="false" afterPath="$PROJECT_DIR$/jellycc/lexer/lexer.shared.inc" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/jellycc/lexer/phf.py" beforeDir="false" afterPath="$PROJECT_DIR$/jellycc/lexer/phf.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/jellycc/lexer/run.py" beforeDir="false" afterPath="$PROJECT_DIR$/jellycc/lexer/run.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/jellycc/parser/codegen.py" beforeDir="false" afterPath="$PROJECT_DIR$/jellycc/parser/lr/codegen.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/jellycc/parser/grammar.py" beforeDir="false" afterPath="$PROJECT_DIR$/jellycc/parser/grammar.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/jellycc/parser/lalr.py" beforeDir="false" afterPath="$PROJECT_DIR$/jellycc/parser/lr/lalr.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/jellycc/parser/lr1.py" beforeDir="false" afterPath="$PROJECT_DIR$/jellycc/parser/lr/lr1.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/jellycc/parser/parser_core.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/jellycc/parser/lr/parser_core.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/jellycc/parser/parser_core.h" beforeDir="false" afterPath="$PROJECT_DIR$/jellycc/parser/lr/parser_core.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/jellycc/parser/parser_vm.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/jellycc/parser/lr/parser_vm.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/jellycc/parser/parser_vm.h" beforeDir="false" afterPath="$PROJECT_DIR$/jellycc/parser/lr/parser_vm.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/jellycc/parser/recovery.py" beforeDir="false" afterPath="$PROJECT_DIR$/jellycc/parser/lr/recovery.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/jellycc/parser/run.py" beforeDir="false" afterPath="$PROJECT_DIR$/jellycc/parser/run.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/jellycc/project/grammar.py" beforeDir="false" afterPath="$PROJECT_DIR$/jellycc/project/grammar.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/jellycc/project/parser.py" beforeDir="false" afterPath="$PROJECT_DIR$/jellycc/project/parser.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/jellycc/project/project.py" beforeDir="false" afterPath="$PROJECT_DIR$/jellycc/project/project.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/jellycc/utils/helpers.py" beforeDir="false" afterPath="$PROJECT_DIR$/jellycc/utils/helpers.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/jellycc/parser/ll/builder.py" beforeDir="false" afterPath="$PROJECT_DIR$/jellycc/parser/ll/builder.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/jellycc/parser/ll/codegen.py" beforeDir="false" afterPath="$PROJECT_DIR$/jellycc/parser/ll/codegen.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/jellycc/parser/ll/parser_core.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/jellycc/parser/ll/parser_core.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/jellycc/parser/ll/parser_core.h" beforeDir="false" afterPath="$PROJECT_DIR$/jellycc/parser/ll/parser_core.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/jellycc/parser/ll/parser_lec.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/jellycc/parser/ll/parser_lec.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/jellycc/parser/ll/parser_panic.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/jellycc/parser/ll/parser_panic.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/jellycc/parser/ll/parser_recovery.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/jellycc/parser/ll/parser_recovery.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/parsertest/parsertest.vcxproj" beforeDir="false" afterPath="$PROJECT_DIR$/parsertest/parsertest.vcxproj" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/parsertest/source/main.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/parsertest/source/main.cpp" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="FavoritesManager">
+    <favorites_list name="jellycc" />
   </component>
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
@@ -77,7 +70,7 @@
       </list>
     </option>
   </component>
-  <component name="RunManager" selected="Python.jellycc - test">
+  <component name="RunManager" selected="Python.jellycc jellyscript">
     <configuration name="jellycc - test" type="PythonConfigurationType" factoryName="Python">
       <module name="jellycc" />
       <option name="INTERPRETER_OPTIONS" value="" />
@@ -99,6 +92,27 @@
       <option name="INPUT_FILE" value="" />
       <method v="2" />
     </configuration>
+    <configuration name="jellycc jellyscript" type="PythonConfigurationType" factoryName="Python">
+      <module name="jellycc" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="D:\Soft\Python36\python.exe" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
+      <option name="IS_MODULE_SDK" value="false" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <option name="SCRIPT_NAME" value="jellycc" />
+      <option name="PARAMETERS" value="$PROJECT_DIR$/../jellyscript/grammar/grammar.jcc --base-dir parsertest --lexer-header .output/jellyscript/lexer.h --lexer-source .output/jellyscript/lexer.cpp --lexer-prefix LEX --lexer-ns lex --parser-header .output/jellyscript/parser.h --parser-source .output/jellyscript/parser.cpp" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="true" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
+      <method v="2" />
+    </configuration>
     <configuration name="jellycc" type="PythonConfigurationType" factoryName="Python" nameIsGenerated="true">
       <module name="jellycc" />
       <option name="INTERPRETER_OPTIONS" value="" />
@@ -112,7 +126,7 @@
       <option name="ADD_CONTENT_ROOTS" value="true" />
       <option name="ADD_SOURCE_ROOTS" value="true" />
       <option name="SCRIPT_NAME" value="jellycc" />
-      <option name="PARAMETERS" value="examples/jellyscript.jcc --lexer-header .output/jellyscript/lexer.h --lexer-source .output/jellyscript/lexer.cpp --lexer-prefix LEX --lexer-ns lex --parser-header .output/jellyscript/parser.h --parser-source .output/jellyscript/parser.cpp" />
+      <option name="PARAMETERS" value="examples/jellyscript.jcc --base-dir parsertest --lexer-header .output/jellyscript/lexer.h --lexer-source .output/jellyscript/lexer.cpp --lexer-prefix LEX --lexer-ns lex --parser-header .output/jellyscript/parser.h --parser-source .output/jellyscript/parser.cpp" />
       <option name="SHOW_COMMAND_LINE" value="false" />
       <option name="EMULATE_TERMINAL" value="false" />
       <option name="MODULE_MODE" value="true" />
@@ -143,6 +157,7 @@
     </configuration>
     <list>
       <item itemvalue="Python.jellycc" />
+      <item itemvalue="Python.jellycc jellyscript" />
       <item itemvalue="Python.jellycc - test" />
       <item itemvalue="Python.regexp" />
     </list>

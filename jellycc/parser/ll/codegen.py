@@ -199,6 +199,12 @@ class CodegenLH:
 			printer.write(str(self.terminal_table_size))
 		elif name == "state_count":
 			printer.write(str(len(self.states)))
+		elif name == "token_eof":
+			printer.write(f"{self.grammar.shared.term_eof.value}")
+		elif name == "token_skippable_data":
+			for chunk in chunked(self.all_terminals, 32):
+				printer.write(','.join(map((lambda t: '1' if t.terminal.skip else '0'), chunk)))
+				printer.writeln(',')
 		elif name == "base_data":
 			for chunk in chunked(self.states, 10):
 				printer.write(', '.join(map(lambda row: str(row.base_offset), chunk)))

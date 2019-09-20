@@ -8,13 +8,16 @@ using u64 = uint64_t;
 
 #include "../../.output/jellyscript/lexer.h"
 #include "../../.output/jellyscript/parser.h"
-
+/*
 const unsigned char test_input[] = {
-	// "y=75;\n  /*   */ x=sin(y/180+;a=4;a=a+ 1; import c a=a*3;b=2+2*2;x=2;"
-	// "x=sin(1+;2);"
-	"import c a = a*3;"
+	"y=75;\n  x=sin(y/180+;a=4;a=a+ 1; import 'c'; a=a*3;b=2+2*2;x=2;"
+	"x=sin(1+2);"
+	"import 'a'; a = a*3; impoty 'axcas' {a; b};"
+	"import 'aasc' as qwe;"
+	"import '' as a {b,c as we}; ID = 10;"
+	"import 'q'; a=a*3;"
 };
-
+*/
 enum class Token: u16 {
 #define X(t,v,n) t=v,
 	LEX_TOKENS(X)
@@ -45,7 +48,23 @@ const char* NameOf(uint16_t t) {
 	return "<unknown_token>";
 }
 
+std::vector<uint8_t> read_file(const char* path) {
+	std::vector<uint8_t> r;
+	FILE* f = fopen(path, "rb");
+	fseek(f, 0, SEEK_END);
+	int size = ftell(f);
+	r.resize(size);
+	fseek(f, 0, SEEK_SET);
+	fread(r.data(), size, 1, f);
+	fclose(f);
+	return r;
+}
+
+std::vector<uint8_t> input;
+
 int main() {
+	input = read_file("test/test1.test");
+
 	Offsets.push_back(0);
 	lex::run(
 		{
@@ -60,8 +79,8 @@ int main() {
 				*count = sizeof(TokenBuffer) / sizeof(TokenBuffer[0]);
 			}
 		},
-		test_input,
-		sizeof(test_input) - 1
+		input.data(),
+		input.size()
 	);
 	Tokens.push_back((u16)Token::EoF);
 	Offsets.push_back(Offsets.back());
@@ -99,11 +118,11 @@ int main() {
 	CBData cb = {
 		nullptr,
 		[](void*, uint32_t pos) -> std::string {
-			return {(const char*)test_input + Offsets[pos], Offsets[pos + 1] - Offsets[pos]};
+			return {(const char*)input.data() + Offsets[pos], Offsets[pos + 1] - Offsets[pos]};
 		},
 		[](void*, uint32_t pos) -> double {
 			try{
-				return std::stod({(const char*)test_input + Offsets[pos], Offsets[pos + 1] - Offsets[pos]});
+				return std::stod({(const char*)input.data() + Offsets[pos], Offsets[pos + 1] - Offsets[pos]});
 			} catch (...) {
 				return std::numeric_limits<double>::quiet_NaN();
 			}

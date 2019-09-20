@@ -10,16 +10,16 @@ static int rewind(ParserState* parser, int tokens) {
 			break;
 		}
 
-		rewind -= 2;
-
-		uint16_t state = rewind[0];
-		uint16_t entry_id = rewind[1];
+		uint16_t state = rewind[-2];
+		uint16_t entry_id = rewind[-1];
 		table_entry entry = data_entries[entry_id];
 
 		tokens -= entry.shift;
 		if (tokens < 0) {
 			break;
 		}
+		rewind -= 2;
+
 		input -= entry.shift;
 
 		stack -= entry.state_change;
@@ -30,7 +30,10 @@ static int rewind(ParserState* parser, int tokens) {
 		}
 	}
 
-	COPY_STATE;
+	parser->stack = stack;
+	parser->input = input;
+	parser->output = output;
+	parser->rewind = rewind;
 	return tokens;
 }
 
@@ -56,9 +59,9 @@ static ParseResult parser_local_error_correction(ParserState* parser, const uint
 static ParseResult parser_panic_resync(ParserState* parser);
 static ParseResult parser_greedy_consume(ParserState* parser);
 
-static constexpr uint16_t LEC_lookahead = 6;
-static constexpr uint16_t LEC_backtrack = 8;
-static constexpr uint16_t LEC_accept_threshold = 2;
+static constexpr uint16_t LEC_lookahead = 12;
+static constexpr uint16_t LEC_backtrack = 12;
+static constexpr uint16_t LEC_accept_threshold = 6;
 
 static ParseResult parser_recovery(ParserState* parser) {
 	// remember the error token

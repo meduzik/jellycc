@@ -148,7 +148,7 @@ as_clause: {nullptr};
 subset_clause: {nullptr};
 subset_clause: '{' subset_entries '}' {nullptr};
 subset_entries: {nullptr};
-subset_entries: subset_entries_head ',' subset_entry {nullptr};
+subset_entries: subset_entries_head {nullptr};
 subset_entries_head: subset_entry {nullptr};
 subset_entries_head: subset_entries_head ',' subset_entry {nullptr};
 

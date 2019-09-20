@@ -10,6 +10,10 @@ ${parser_source}
 
 namespace ${parser_namespace} {
 
+extern const uint8_t skippable_flag[${token_count}] = {
+	${token_skippable_data}
+};
+
 struct VMArgs {
 	${vm_struct}
 };
@@ -267,13 +271,7 @@ static bool run_core(ParserState* parser) {
 	uint16_t* rewind_end = parser->rewind_end;
 	uint16_t* stack_limit = parser->stack_limit;
 
-#define COPY_STATE \
-	{parser->stack = stack;parser->input = input;parser->output = output;parser->rewind = rewind;}
-
 	while (true) {
-		if (input >= input_end) {
-			goto exit_success;
-		}
 		if (rewind >= rewind_end || stack >= stack_limit) {
 			goto exit_fail;
 		}
@@ -302,6 +300,9 @@ static bool run_core(ParserState* parser) {
 		}
 	}
 
+#define COPY_STATE \
+	{parser->stack = stack;parser->input = input;parser->output = output;parser->rewind = rewind;}
+
 exit_success:
 	COPY_STATE;
 	return true;
@@ -309,6 +310,8 @@ exit_success:
 exit_fail:
 	COPY_STATE;
 	return false;
+
+#undef COPY_STATE
 }
 
 ${include:parser_recovery.cpp}

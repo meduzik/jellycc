@@ -1,0 +1,7 @@
+import "ascascas";
+import "math";
+
+x = 10;
+y = 6;
+z = ((x + y) / 2
+d = x + y + z;

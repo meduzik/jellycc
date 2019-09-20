@@ -54,8 +54,8 @@ if args.parser_header or args.parser_source:
 	dry_run = False
 	print("WARNING! Parser generation is incomplete and should not be used")
 
-	project.lexer_generator.lexer_grammar.prefix = args.parser_prefix
-	project.lexer_generator.lexer_grammar.namespace = args.parser_ns
+	project.parser_generator.grammar.prefix = args.parser_prefix
+	project.parser_generator.grammar.ns = args.parser_ns
 
 	if args.parser_header:
 		project.parser_generator.grammar.core_header_path = args.parser_header[0]

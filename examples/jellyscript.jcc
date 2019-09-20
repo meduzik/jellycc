@@ -1,6 +1,6 @@
 [terminals]
 
-import: KImport;
+import: K_import;
 
 identifier: Identifier;
 
@@ -162,42 +162,61 @@ string_lit:         \' ( \\[nrt0\\'] | \\x <hex_digit>{2} | [^'\\] )* \';
 ";";
 "?";
 
+
+[parser.header]
+#include <unordered_map>
+#include <string>
+
+using VarMap = std::unordered_map<std::string, double>;
+struct DoubleList {
+	double val;
+	DoubleList* next;
+};
+struct CBData {
+	void* ud;
+	std::string (*make_string) (void*, uint32_t t);
+	double (*make_num) (void*, uint32_t t);
+	double (*invoke) (void*, const std::string& fname, DoubleList* args);
+	void (*sync_skip) (void*, uint32_t*& tokid, size_t num);
+	void (*sync_insert) (void*, uint32_t*& tokid, uint16_t terminal);
+
+	void (*lec_insert) (void*, uint32_t*& tokid, uint16_t terminal);
+	void (*lec_remove) (void*, uint32_t*& tokid);
+	void (*lec_replace) (void*, uint32_t*& tokid, uint16_t terminal);
+};
+using FuncMap = std::unordered_map<std::string, double(*)(DoubleList*)>;
+
+[parser.source]
+
+#define mkstring(t) cb.make_string(cb.ud, t)
+#define mklist(head, tail) new DoubleList{head, tail}
+#define parse(t) cb.make_num(cb.ud, t)
+
+[parser.vm_args]
+vars: "VarMap*";
+tokid: "uint32_t*";
+cb: "CBData";
+
+[parser.vm_actions]
+shift: {*(tokid++)};
+correction_remove: { cb.lec_remove(cb.ud, tokid); };
+correction_insert: { cb.lec_insert(cb.ud, tokid, terminal); };
+correction_replace: { cb.lec_replace(cb.ud, tokid, terminal); };
+sync_skip: { cb.sync_skip(cb.ud, tokid, num); };
+sync_insert: { cb.sync_insert(cb.ud, tokid, terminal); };
+
+
 [parser.expose]
 
-S;
+Program;
 
 [parser.types]
 
-S: "int";
-#param_list: "List<int>*";
-vardef: "int";
+Program: "";
 
 [parser.grammar]
 
-S: {nullptr};
-S: S vardef {nullptr};
+Program: Imports Declarations {};
 
-#vardef: identifier '=' e ';' {writevar($identifier,$e)};
-vardef: identifier ';' {writevar($identifier)};
-
-
-
-# S: e {$e};
-
-# e: e '+' f {$e + $f};
-# e: e '-' f {$e - $f};
-# e: f;
-# f: f '*' t {$f * $t};
-# f: f '/' t {$f / $t};
-# f: t;
-# t: '(' e ')' {$e};
-# t: identifier '(' param_list ')' {exec($identifier, $param_list)};
-# t: decimal_lit {atoi($decimal_lit)};
-# t: identifier {var($identifier)};
-#
-# param_list: {nullptr};
-# param_list: param_list_head;
-# param_list_head: e {new List<int>($e, nullptr)};
-# param_list_head: param_list_head ',' e {new List<int>($param_list_head, $e)};
-#
-#
+Imports: {};
+Declarations: {nullptr};

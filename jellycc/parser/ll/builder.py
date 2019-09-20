@@ -1,4 +1,6 @@
+import time
 from collections import defaultdict
+from functools import cmp_to_key
 from typing import List, Union, Dict, Optional, Tuple, Callable, TypeVar, Set, Generator, cast, Iterable, Any
 
 import sys
@@ -15,6 +17,17 @@ class LLState:
 		self.first: Set[SymbolTerminal] = set()
 		self.follow: Set[SymbolTerminal] = set()
 		self.order: int = -1
+
+	def add_production(self, production: 'LLProduction') -> None:
+		for my_production in self.productions:
+			if len(my_production.items) != len(production.items):
+				continue
+			for idx in range(len(my_production.items)):
+				if my_production.items[idx] != production.items[idx]:
+					break
+			else:
+				return
+		self.productions.append(production)
 
 	def __str__(self) -> str:
 		return self.name
@@ -111,6 +124,11 @@ class LLBuilder:
 		self.left_factor()
 		self.compute_first_sets()
 
+		self.print_stats()
+
+	def print_stats(self) -> None:
+		print(f"LL states: {len(self.states)}")
+
 	def dump_states(self, do_contents=True) -> None:
 		print("---")
 		for state in sorted(self.states, key=lambda state: state.name):
@@ -127,16 +145,18 @@ class LLBuilder:
 
 	def construct_initial_states(self) -> None:
 		nt_to_state: Dict[SymbolNonTerminal, LLState] = dict()
+		nt_list: List[Tuple[SymbolNonTerminal, LLState]] = []
 
 		for nt in self.grammar.nonterminals:
 			state = LLState(nt.to_inline_str())
 			self.states.append(state)
+			nt_list.append((nt, state))
 			nt_to_state[nt] = state
 
 		for nt in self.grammar.keep:
 			self.entries[nt] = nt_to_state[nt]
 
-		for nt, state in nt_to_state.items():
+		for nt, state in nt_list:
 			for prod in nt.prods:
 				production = LLProduction(state)
 				for symbol in prod.symbols:
@@ -146,7 +166,7 @@ class LLBuilder:
 						production.items.append(nt_to_state[symbol])
 				if prod.action:
 					production.items.append(prod.action)
-				state.productions.append(production)
+				state.add_production(production)
 
 	def find_nullables(self) -> None:
 		state_to_productions: Dict[LLState, List[LLProduction]] = defaultdict(lambda: [])
@@ -211,6 +231,7 @@ class LLBuilder:
 		self.factor_in_nullables()
 
 	def factor_in_nullables(self) -> None:
+		states_to_kill: Set[LLState] = set()
 		for state in self.states:
 			for production in state.productions:
 				for idx, item in enumerate(production.items):
@@ -219,14 +240,22 @@ class LLBuilder:
 						new_production.items.extend(production.items[:idx])
 						new_production.items.extend(item.nullable)
 						new_production.items.extend(production.items[idx+1:])
-						state.productions.append(new_production)
+						state.add_production(new_production)
 			remove_if(
 				state.productions,
 				lambda production:
 					all(map(lambda item: isinstance(item, Action), production.items))
 			)
+			if len(state.productions) == 0:
+				states_to_kill.add(state)
+		self.remove_states(states_to_kill)
 		for state in self.states:
 			state.nullable = None
+
+	def remove_states(self, states: Set[LLState]) -> None:
+		for state in self.states:
+			remove_if(state.productions, lambda production: any(map(lambda item: item in states, production.items)))
+		remove_if(self.states, lambda s: s in states)
 
 	def eliminate_left_recursion(self) -> None:
 		self.semisort()
@@ -325,8 +354,8 @@ class LLBuilder:
 
 			production.items.extend(items)
 			production.items.append(state_rhs)
-			state_rhs.productions.append(production)
-		state_rhs.productions.append(LLProduction(state_rhs))
+			state_rhs.add_production(production)
+		state_rhs.add_production(LLProduction(state_rhs))
 		self.states.append(state_rhs)
 
 		state.productions = []
@@ -334,7 +363,7 @@ class LLBuilder:
 			production = LLProduction(state_rhs)
 			production.items.extend(items)
 			production.items.append(state_rhs)
-			state.productions.append(production)
+			state.add_production(production)
 
 	def find_first_follow_conflicts(self) -> None:
 		self.compute_first_sets()
@@ -418,20 +447,25 @@ class LLBuilder:
 				return item.first
 		return self.empty_set
 
-	def left_factor_state(self, expanded_rules: Set[LLState], state: LLState):
+	def left_factor_state(self, expanded_rules: Dict[LLState, int], state: LLState):
 		new_productions = []
 		self.reprocess_bucket(expanded_rules, state, state.productions, new_productions)
-		state.productions = new_productions
+		uniques: Dict[Tuple[LLItem, ...], LLState] = dict()
+		for production in new_productions:
+			key = tuple(production.items)
+			if key not in uniques:
+				uniques[key] = production
+		state.productions = list(uniques.values())
 
-	def reduce_ranks(self, expanded_rules: Set[LLState], state: LLState, rank: int, list: List[LLProduction]) -> bool:
+	def reduce_ranks(self, expanded_rules: Dict[LLState, int], state: LLState, rank: int, list: List[LLProduction]) -> bool:
 		new_productions: List[LLProduction] = []
-		new_expansions: List[LLState] = []
+		new_expansions: Set[LLState] = set()
 		for production in list:
 			if self.get_production_rank(production) == rank:
 				for idx, item in enumerate(production.items):
 					if isinstance(item, LLState):
-						new_expansions.append(item)
-						if item in expanded_rules:
+						new_expansions.add(item)
+						if (item in expanded_rules) and (expanded_rules[item] >= 1):
 							return False
 						for item_production in item.productions:
 							new_production = LLProduction(state)
@@ -444,10 +478,11 @@ class LLBuilder:
 				new_productions.append(production)
 		list.clear()
 		list.extend(new_productions)
-		expanded_rules.update(new_expansions)
+		for expansion in new_expansions:
+			expanded_rules[expansion] += 1
 		return True
 
-	def reprocess_bucket(self, expanded_rules: Set[LLState], state: LLState, list: List[LLProduction], output: List[LLProduction]) -> None:
+	def reprocess_bucket(self, expanded_rules: Dict[LLState, int], state: LLState, list: List[LLProduction], output: List[LLProduction]) -> None:
 		buckets: List[Tuple[Set[SymbolTerminal], List[LLProduction]]] = []
 		for production in list:
 			my_set = self.get_production_first_set(production)
@@ -482,19 +517,7 @@ class LLBuilder:
 		self.states.append(state)
 		return state
 
-	def left_factor_bucket(self, expanded_rules: Set[LLState], state: LLState, bucket: List[LLProduction], output: List[LLProduction]) -> None:
-		initial_sequences: Set[Tuple[Action]] = set()
-		for production in bucket:
-			initial_sequences.add(production.extract_action_prefix())
-
-		if len(initial_sequences) > 1:
-			prefixes = '\n'.join(map(lambda t: '  ' + ' '.join(map(str, t)), initial_sequences))
-			print(
-				f"Left factoring failed: state {state.name} has many conflicting action prefixes: {prefixes}",
-				file=sys.stderr
-			)
-			raise RuntimeError("refactoring failed")
-
+	def left_factor_bucket(self, expanded_rules: Dict[LLState, int], state: LLState, bucket: List[LLProduction], output: List[LLProduction]) -> None:
 		common_sequence: List[LLItem] = bucket[0].items[:]
 		for production in bucket[1:]:
 			n = min(len(common_sequence), len(production.items))
@@ -512,9 +535,9 @@ class LLBuilder:
 				productions = '\n'.join(map(lambda x: '  ' + str(x), bucket))
 				states = ' '.join(map(str, expanded_rules))
 				print(
-					f"Left factoring failed: state {state.name} invokes recursive expansion:\n{states}\n\n{productions}",
-					file=sys.stderr
+					f"Left factoring failed: state {state.name} invokes recursive expansion:\n{states}\n\n{productions}"
 				)
+				self.dump_states()
 				raise RuntimeError("refactoring failed")
 			else:
 				self.reprocess_bucket(expanded_rules, state, bucket, output)
@@ -524,11 +547,16 @@ class LLBuilder:
 		for production in bucket:
 			rhs_production = LLProduction(rhs_state)
 			rhs_production.items.extend(production.items[len(common_sequence):])
-			rhs_state.productions.append(rhs_production)
+			rhs_state.add_production(rhs_production)
 			rhs_state.follow = state.follow
 			rhs_state.first.update(self.get_production_first_set(rhs_production))
-		self.left_factor_state(expanded_rules, rhs_state)
+		old_state = rhs_state
 		rhs_state = self.insert_unique_state(rhs_state)
+		if rhs_state != old_state:
+			rules_copy = defaultdict(lambda: 0)
+			for k, v in expanded_rules.items():
+				rules_copy[k] = v
+			self.left_factor_state(rules_copy, rhs_state)
 
 		factored_production = LLProduction(state)
 		factored_production.items.extend(common_sequence)
@@ -537,8 +565,8 @@ class LLBuilder:
 
 	def eliminate_common_prefix(self) -> None:
 		self.compute_ranks()
-		for state in self.states[:]:
-			self.left_factor_state(set(), state)
+		for state in self.states[::]:
+			self.left_factor_state(defaultdict(lambda: 0), state)
 
 	def get_production_rank(self, production: LLProduction) -> int:
 		for item in production.items:
@@ -595,21 +623,42 @@ class LLBuilder:
 				for production in target.productions:
 					production_copy = LLProduction(state)
 					production_copy.items.extend(production.items)
-					state.productions.append(production_copy)
+					state.add_production(production_copy)
 
 	def merge_states(self) -> None:
 		shapes: Dict[LLState, int] = dict()
 
+		def compare(l1, l2) -> int:
+			if len(l1) > len(l2):
+				return -1
+			if len(l1) < len(l2):
+				return 1
+			for idx in range(len(l1)):
+				i1 = l1[idx]
+				i2 = l2[idx]
+				if isinstance(i1, int) and isinstance(i2, int):
+					if i1 - i2 != 0:
+						return i1 - i2
+				elif isinstance(i1, int):
+					return -1
+				elif isinstance(i2, int):
+					return 1
+				else:
+					if id(i1) != id(i2):
+						return id(i1) - id(i2)
+			return 0
+
 		def construct_state_key(state: LLState) -> Any:
 			key_list = []
 			for production in state.productions:
+				key_sublist = []
 				for item in production.items:
 					if isinstance(item, LLState):
-						key_list.append(shapes[item])
+						key_sublist.append(shapes[item])
 					else:
-						key_list.append(item)
-				key_list.append(None)
-			return tuple(key_list)
+						key_sublist.append(item)
+				key_list.append(tuple(key_sublist))
+			return tuple(sorted(key_list, key=cmp_to_key(compare)))
 
 		for state in self.states:
 			shapes[state] = 0

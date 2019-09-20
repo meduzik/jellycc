@@ -123,6 +123,63 @@ static ParseResult parser_panic_resync(ParserState* parser) {
 	return ParseResult::FatalError;
 }
 
+
+static bool parser_run_to_end(ParserState* parser) {
+	uint16_t* __restrict stack = parser->stack;
+	const uint16_t* __restrict input = parser->input;
+	const uint16_t* input_end = parser->input_end;
+	uint16_t* __restrict output = parser->output;
+	uint16_t* __restrict rewind = parser->rewind;
+	uint16_t* rewind_end = parser->rewind_end;
+	uint16_t* stack_limit = parser->stack_limit;
+
+	while (true) {
+		if (rewind >= rewind_end || stack >= stack_limit) {
+			goto exit_fail;
+		}
+		if (input == input_end) {
+			goto exit_success;
+		}
+
+		uint16_t state = *stack;
+		uint16_t tok = *input;
+		uint8_t dispatch = data_dispatch[state][tok];
+		if (dispatch == 0xff) {
+			goto exit_success;
+		}
+		size_t locus = data_base[state] + dispatch;
+		uint16_t entry_id = data_table[locus];
+		table_entry entry = data_entries[entry_id];
+
+		rewind[0] = state;
+		rewind[1] = entry_id;
+		rewind += 2;
+
+		input += entry.shift;
+		memcpy(stack, entry.data, sizeof(entry.data));
+		stack += entry.state_change;
+		*output = entry.megaaction;
+
+		if (entry.megaaction) {
+			output++;
+		}
+	}
+
+#define COPY_STATE \
+	{parser->stack = stack;parser->input = input;parser->output = output;parser->rewind = rewind;}
+
+exit_success:
+	COPY_STATE;
+	return true;
+
+exit_fail:
+	COPY_STATE;
+	return false;
+
+#undef COPY_STATE
+}
+
+
 static ParseResult parser_greedy_consume(ParserState* parser) {
 	while (true) {
 		if (parser->rewind >= parser->rewind_end) {
@@ -131,7 +188,7 @@ static ParseResult parser_greedy_consume(ParserState* parser) {
 		if (parser->stack >= parser->stack_limit) {
 			JELLYCC_CHECKED(parser_grow_stack(parser));
 		}
-		if (run_core(parser)) {
+		if (parser_run_to_end(parser)) {
 			if (parser->input == parser->input_end) {
 				break;
 			} else {

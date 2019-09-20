@@ -130,6 +130,9 @@ class Action:
 		return "{" + str(self) + "}"
 
 	def __str__(self) -> str:
+		return f"{self.idx}"
+
+	def __qstr__(self) -> str:
 		def arg_to_val(arg: Tuple[Optional[str], Type]) -> str:
 			if arg[0]:
 				return f"{arg[0]}:{arg[1]}"
