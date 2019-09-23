@@ -149,7 +149,7 @@ static bool parser_run_to_end(ParserState* parser) {
 		}
 		size_t locus = data_base[state] + dispatch;
 		uint16_t entry_id = data_table[locus];
-		table_entry entry = data_entries[entry_id];
+		const table_entry& entry = data_entries[entry_id];
 
 		rewind[0] = state;
 		rewind[1] = entry_id;
@@ -160,9 +160,7 @@ static bool parser_run_to_end(ParserState* parser) {
 		stack += entry.state_change;
 		*output = entry.megaaction;
 
-		if (entry.megaaction) {
-			output++;
-		}
+		output++;
 	}
 
 #define COPY_STATE \

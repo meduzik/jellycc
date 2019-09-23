@@ -30,7 +30,7 @@ class LLState:
 		self.productions.append(production)
 
 	def __str__(self) -> str:
-		return self.name
+		return self.name + '(' + str(len(self.productions)) + ')'
 
 
 class LLProduction:
@@ -121,9 +121,11 @@ class LLBuilder:
 		self.merge_states()
 		self.filter_states()
 
+		self.eliminate_nullables()
 		self.left_factor()
 		self.compute_first_sets()
 
+		self.filter_states()
 		self.print_stats()
 
 	def print_stats(self) -> None:
@@ -290,16 +292,20 @@ class LLBuilder:
 			if state.order < 0:
 				continue
 			extra_productions: List[LLProduction] = []
+			remove_productions: Set[LLProduction] = set()
 			for production in state.productions:
 				reachable, idx = production.extract_reachable()
 				if (reachable is not None) and (reachable.order < state.order):
+					remove_productions.add(production)
 					for their_production in reachable.productions:
 						new_production = LLProduction(state)
 						new_production.items.extend(production.items[:idx])
 						new_production.items.extend(their_production.items)
 						new_production.items.extend(production.items[idx+1:])
 						extra_productions.append(new_production)
-			state.productions.extend(extra_productions)
+			if len(remove_productions) > 0 or len(extra_productions) > 0:
+				remove_if(state.productions, lambda s: s in remove_productions)
+				state.productions.extend(extra_productions)
 			self.eliminate_direct_left_recursion(state)
 
 	def eliminate_direct_left_recursion(self, state: LLState) -> None:
@@ -552,7 +558,7 @@ class LLBuilder:
 			rhs_state.first.update(self.get_production_first_set(rhs_production))
 		old_state = rhs_state
 		rhs_state = self.insert_unique_state(rhs_state)
-		if rhs_state != old_state:
+		if rhs_state == old_state:
 			rules_copy = defaultdict(lambda: 0)
 			for k, v in expanded_rules.items():
 				rules_copy[k] = v

@@ -262,6 +262,7 @@ ParseResult parser_run(ParserState* parser, NonTerminal nt, const uint16_t* inpu
 	return ParseResult::OK;
 }
 
+__declspec(noinline)
 static bool run_core(ParserState* parser) {
 	uint16_t* __restrict stack = parser->stack;
 	const uint16_t* __restrict input = parser->input;
@@ -284,7 +285,7 @@ static bool run_core(ParserState* parser) {
 		}
 		size_t locus = data_base[state] + dispatch;
 		uint16_t entry_id = data_table[locus];
-		table_entry entry = data_entries[entry_id];
+		const table_entry& entry = data_entries[entry_id];
 
 		rewind[0] = state;
 		rewind[1] = entry_id;
@@ -294,10 +295,7 @@ static bool run_core(ParserState* parser) {
 		memcpy(stack, entry.data, sizeof(entry.data));
 		stack += entry.state_change;
 		*output = entry.megaaction;
-
-		if (entry.megaaction) {
-			output++;
-		}
+		output++;
 	}
 
 #define COPY_STATE \

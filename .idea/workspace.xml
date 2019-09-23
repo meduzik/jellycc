@@ -3,19 +3,12 @@
   <component name="ChangeListManager">
     <list default="true" id="5bc0cf74-ef40-4076-a3ab-521a1dbb6c85" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/examples/jellyscript.jcc" beforeDir="false" afterPath="$PROJECT_DIR$/examples/jellyscript.jcc" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/examples/test1.jcc" beforeDir="false" afterPath="$PROJECT_DIR$/examples/test1.jcc" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/jellycc/__main__.py" beforeDir="false" afterPath="$PROJECT_DIR$/jellycc/__main__.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/jellycc/parser/grammar.py" beforeDir="false" afterPath="$PROJECT_DIR$/jellycc/parser/grammar.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/jellycc/parser/ll/builder.py" beforeDir="false" afterPath="$PROJECT_DIR$/jellycc/parser/ll/builder.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/jellycc/parser/ll/codegen.py" beforeDir="false" afterPath="$PROJECT_DIR$/jellycc/parser/ll/codegen.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/jellycc/parser/ll/parser_core.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/jellycc/parser/ll/parser_core.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/jellycc/parser/ll/parser_core.h" beforeDir="false" afterPath="$PROJECT_DIR$/jellycc/parser/ll/parser_core.h" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/jellycc/parser/ll/parser_lec.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/jellycc/parser/ll/parser_lec.cpp" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/jellycc/parser/ll/parser_panic.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/jellycc/parser/ll/parser_panic.cpp" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/jellycc/parser/ll/parser_recovery.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/jellycc/parser/ll/parser_recovery.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/parsertest/parsertest.vcxproj" beforeDir="false" afterPath="$PROJECT_DIR$/parsertest/parsertest.vcxproj" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/parsertest/source/main.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/parsertest/source/main.cpp" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -134,6 +127,27 @@
       <option name="INPUT_FILE" value="" />
       <method v="2" />
     </configuration>
+    <configuration name="profile" type="PythonConfigurationType" factoryName="Python">
+      <module name="jellycc" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="D:\Soft\Python36\python.exe" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
+      <option name="IS_MODULE_SDK" value="false" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <option name="SCRIPT_NAME" value="cProfile" />
+      <option name="PARAMETERS" value="jellycc/run.py $PROJECT_DIR$/../jellyscript/grammar/grammar.jcc --base-dir parsertest --lexer-header .output/jellyscript/lexer.h --lexer-source .output/jellyscript/lexer.cpp --lexer-prefix LEX --lexer-ns lex --parser-header .output/jellyscript/parser.h --parser-source .output/jellyscript/parser.cpp" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="true" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
+      <method v="2" />
+    </configuration>
     <configuration name="regexp" type="PythonConfigurationType" factoryName="Python" temporary="true">
       <module name="jellycc" />
       <option name="INTERPRETER_OPTIONS" value="" />
@@ -158,6 +172,7 @@
     <list>
       <item itemvalue="Python.jellycc" />
       <item itemvalue="Python.jellycc jellyscript" />
+      <item itemvalue="Python.profile" />
       <item itemvalue="Python.jellycc - test" />
       <item itemvalue="Python.regexp" />
     </list>
@@ -192,5 +207,15 @@
         </entry>
       </map>
     </option>
+  </component>
+  <component name="XDebuggerManager">
+    <watches-manager>
+      <configuration name="PythonConfigurationType">
+        <watch expression="self.states[44]" />
+        <watch expression="__py_debug_temp_var_331569379" />
+        <watch expression="__py_debug_temp_var_331569379" />
+        <watch expression="__py_debug_temp_var_331569379" />
+      </configuration>
+    </watches-manager>
   </component>
 </project>

@@ -12,7 +12,7 @@ static int rewind(ParserState* parser, int tokens) {
 
 		uint16_t state = rewind[-2];
 		uint16_t entry_id = rewind[-1];
-		table_entry entry = data_entries[entry_id];
+		const table_entry& entry = data_entries[entry_id];
 
 		tokens -= entry.shift;
 		if (tokens < 0) {
@@ -25,9 +25,7 @@ static int rewind(ParserState* parser, int tokens) {
 		stack -= entry.state_change;
 		*stack = state;
 
-		if (entry.megaaction) {
-			output--;
-		}
+		output--;
 	}
 
 	parser->stack = stack;
