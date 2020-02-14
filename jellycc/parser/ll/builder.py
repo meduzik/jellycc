@@ -523,6 +523,31 @@ class LLBuilder:
 		self.states.append(state)
 		return state
 
+	def unify_bucket(self, state: LLState, bucket: List[LLProduction]) -> None:
+		"""
+		heads: Dict[Tuple[LLItem, ...], LLState] = dict()
+		for production in bucket:
+			_, idx = production.extract_reachable()
+			key = tuple(production.items[:idx + 1])
+			if key not in heads:
+				rhs_state = LLState(state.name + '[' + ' '.join(map(str, key)) + ']')
+				heads[key] = rhs_state
+			rhs_state = heads[key]
+			new_production = LLProduction(rhs_state)
+			new_production.items.extend(production.items[idx + 1:])
+			rhs_state.productions.append(new_production)
+		new_productions: List[LLProduction] = []
+		for key, rhs_state in heads.items():
+			rhs_state = self.insert_unique_state(rhs_state)
+			production = LLProduction(state)
+			production.items.extend(key)
+			production.items.append(rhs_state)
+			new_productions.append(production)
+		bucket.clear()
+		bucket.extend(new_productions)
+		"""
+		pass
+
 	def left_factor_bucket(self, expanded_rules: Dict[LLState, int], state: LLState, bucket: List[LLProduction], output: List[LLProduction]) -> None:
 		common_sequence: List[LLItem] = bucket[0].items[:]
 		for production in bucket[1:]:
@@ -536,6 +561,7 @@ class LLBuilder:
 				del common_sequence[idx:]
 
 		if len(common_sequence) == 0:
+			self.unify_bucket(state, bucket)
 			max_rank = max(map(self.get_production_rank, bucket))
 			if not self.reduce_ranks(expanded_rules, state, max_rank, bucket):
 				productions = '\n'.join(map(lambda x: '  ' + str(x), bucket))
